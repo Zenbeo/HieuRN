@@ -27,12 +27,10 @@ import { colors } from '../../constaints/colors';
     //         return colors.warning}
     //     return colors.sucses
     //C2 
-    return status.toLowerCase().trim() == 'opening soon'
+    return status.toLowerCase().trim() == 'Còn hàng'
       ? colors.sucses
-      : status.toLowerCase().trim() == 'closeing soon'
+      : status.toLowerCase().trim() == 'Hết hàng'
       ? colors.alert
-      : status.toLowerCase().trim() == 'coming soon'
-      ? colors.warning
       : colors.sucses;
   }
 function FoodItem(props){
@@ -77,25 +75,7 @@ function FoodItem(props){
                   backgroundColor: 'black',
                 }}
               />
-              {/* <View
-                style={{
-                  flexDirection: 'row',
-                }}>
-                <Text
-                  style={{
-                    color: colors.inactive,
-                    fontSize: fontSize.h4,
-                  }}>
-                  Status:
-                </Text>
-                <Text
-                  style={{
-                    color:_getColorFromStatus(status),
-                    fontSize: fontSize.h4,
-                  }}>
-                  {status.toUpperCase()}
-                </Text>
-              </View> */}
+             
               <Text
                 style={{
                   color: colors.inactive,
@@ -111,36 +91,9 @@ function FoodItem(props){
                 }}>
               Size : {size}
               </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                }}>
-                    
-               {/* {sociaNetworks['facebook'] != undefined && <Image 
-                  style={{
-                    width: 30,
-                    height: 30,
-                    marginRight: 10,
-                  }}
-                  source={icons.facebook}
-                />}
-               {sociaNetworks['gmail'] != undefined && <Image
-                  style={{
-                    width: 30,
-                    height: 30,
-                  }}
-                  source={icons.gmail}
-                />}
-                {sociaNetworks['instagram'] != undefined &&<Image
-                  style={{
-                    width: 30,
-                    height: 30,
-                    marginLeft: 10,
-                  }}
-                  source={icons.instagram}
-                />} */}
-              </View>
+              
             </View>
+            
         </TouchableOpacity>
       
     )

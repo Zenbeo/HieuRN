@@ -94,7 +94,7 @@ function SettingFList(props) {
                           // backgroundColor:'black'
                           tintColor: 'black',
                         }}
-                        source={i.icons}></Image>
+                        source={i.icons}/>
                       <Text style={{marginLeft: 5}}>{i.name}</Text>
                     </View>
                   );

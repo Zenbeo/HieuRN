@@ -4,7 +4,7 @@ export  const IconImage = [{
     facebook: require('../asset/facebook1.png'),
     gmail: require('../asset/gmail.png'),
     instagram:require('../asset/instagram.png'),
-    menu:require('../asset/list.png'),
+ 
     heartDo:require('../asset/heartDo.png'),
     heartDen:require('../asset/heartDen.png'),
     star : require('../asset/star.png'),

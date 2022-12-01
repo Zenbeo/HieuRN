@@ -3,7 +3,8 @@ export const DataFList = [
       name: ' Phin nâu đá',
       url: 'https://www.highlandscoffee.com.vn/vnt_upload/product/03_2018/PHIN-SUA-DA.png', 
       price: 25000,
-      size: 'M , L '
+      size: 'M , L ',
+      
     },
     {
         name: 'Phin đen đá',
@@ -25,7 +26,7 @@ export const DataFList = [
       },
       {
         name: 'sữa chua đánh đá cafe',
-        url: 'hhttps://dungcuphache.com/wp-content/uploads/2022/01/thanh-pham-ly-sua-chua-danh-da-ca-phe.jpg', 
+        url: 'https://dungcuphache.com/wp-content/uploads/2022/01/thanh-pham-ly-sua-chua-danh-da-ca-phe.jpg', 
         price: 35000,
         size: 'M , L '
       },
@@ -83,18 +84,18 @@ export const DataFList = [
             name: 'Bánh chuối',
             url: 'https://www.highlandscoffee.com.vn/vnt_upload/product/03_2018/thumbs/270_crop_MOUSSEDAO.png',       
             price: 25000,
-            size: 'M , L '
+            size : 'M'
           },
           {
               name: 'Bánh cacao',
               url: 'https://www.highlandscoffee.com.vn/vnt_upload/product/03_2018/MOUSSECACAO.png',
               price: 25000,
-              size: 'M , L '
+              size : 'M'
             },
             {
               name: 'Bánh trà xanh',
               url: 'https://d1sag4ddilekf6.azureedge.net/compressed/items/VNITE20220403063442028427/photo/c830ef89ad4a427a92b80f58ab403c0e_1648967682363586985.jpg',
               price: 25000,
-              size: 'M , L '
+            size : 'M'
             },
   ]

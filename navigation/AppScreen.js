@@ -29,9 +29,11 @@ import {
 import UITap from './UITap'
 import { Login, MainScreen } from '../screens'
 import MuiltiChoice from '../screens/Muitichoice'
+import ContextProvider from './Context/ContextProvider'
 function AppScreen(props) {
     const Stack = createNativeStackNavigator()//lien ket tab
-    return <NavigationContainer>
+    return <ContextProvider>
+    <NavigationContainer>
         <Stack.Navigator initialRouteName='MainScreen' screenOptions={{//gans manf chinhs
             headerShown: false //hiện nút back 
         }}>
@@ -41,5 +43,6 @@ function AppScreen(props) {
             
         </Stack.Navigator>
     </NavigationContainer>
+    </ContextProvider>
 }
 export default AppScreen

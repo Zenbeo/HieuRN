@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   Text,
   View,
@@ -12,12 +12,18 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import { UIHearder } from '../Button';
+import {UIHearder} from '../Button';
 import {images, icons, fontSize} from '../constaints';
+import ContextProvider from '../navigation/Context/ContextProvider';
 import UITap from '../navigation/UITap';
 import {isValidEmail, isValidPassword} from '../utilies/validations';
 
 function Login(props) {
+  //navigation
+  const {navigation, rount} = props;
+  //function of navigate to/back
+  const {navigate, goBack} = navigation;
+
   //state
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassWord] = useState('');
@@ -34,10 +40,9 @@ function Login(props) {
       setKeyboardIsShow(false);
     });
   });
-//navigation
-const {navigation, rount}=props
-//function of navigate to/back
-const {navigate,goBack }=navigation
+
+  const user = useContext(ContextProvider);
+console.log(user)
 
   return (
     <KeyboardAvoidingView
@@ -99,11 +104,6 @@ const {navigate,goBack }=navigation
           </Text>
           <TextInput
             onChangeText={text => {
-              // cập nhật thay đổi thông tin
-              // if(isValidEmail(text)==false){
-              //     setErrorEmail('Email not in corect format')
-
-              // }else setErrorEmail(''):
               setErrorEmail(
                 isValidEmail(text) == true ? '' : 'Email not in corect format',
               );
@@ -111,11 +111,11 @@ const {navigate,goBack }=navigation
             }}
             style={{
               color: 'black',
-              //borderBottomWidth:1
             }}
             placeholder="example@gmail.com"
             placeholderTextColor={'rgba(0,0,0,0.6)'}
-            value={'hieu@gmail.com'}
+            // value={'hieu@gmail.com'}
+            onChange={setEmail}
           />
           <View
             style={{
@@ -159,7 +159,8 @@ const {navigate,goBack }=navigation
             placeholder="Enter your password"
             placeholderTextColor={'rgba(0,0,0,0.6)'}
             secureTextEntry={true} //tính bảo mật ****
-            value={'12345677'}
+            // value={'hhhh'}
+            onChange={setPassWord}
           />
           <View
             style={{
@@ -183,8 +184,7 @@ const {navigate,goBack }=navigation
           <TouchableOpacity
             onPress={() => {
               //alert('Email=${email},PassWord =${passWord}');
-              navigate(UITap)
-              
+              navigate(UITap);
             }}
             style={{
               justifyContent: 'center',
@@ -198,28 +198,9 @@ const {navigate,goBack }=navigation
               style={{
                 padding: 7,
                 fontSize: fontSize.h4,
+                color: ' red',
               }}>
-              Login{' '}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              alert('Hello');
-            }}
-            style={{
-              padding: 5,
-              //  justifyContent: 'center',
-              // alignItems: 'center',
-              //flexDirection: 'row',
-            }}>
-            <Text
-              style={{
-                padding: 15,
-                fontSize: fontSize.h5,
-                color: 'black',
-                alignSelf: 'center',
-              }}>
-              New user? Register now{' '}
+              Login
             </Text>
           </TouchableOpacity>
         </View>
@@ -227,7 +208,7 @@ const {navigate,goBack }=navigation
         <View></View>
       )}
 
-       {keyboardIsShow == false ? (
+      {keyboardIsShow == false ? (
         <View
           style={{
             flex: 15,
@@ -266,35 +247,10 @@ const {navigate,goBack }=navigation
               }}
             />
           </View>
-          {/* <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              // alignItems: 'center',
-              // padding: 15,
-            }}>
-            <Image
-              style={{
-                width: 50,
-                height: 50,
-                marginRight: 15,
-              }}
-              source={icons.facebook}
-            />
-            <Image
-              style={{
-                width: 50,
-                height: 50,
-              }}
-              source={icons.gmail}
-            />
-            {/* <Icon name="facebook" size={35} color={Colors.facebook} />
-           <Icons name="gamil" size={35} color={Colors.gmail} /> */}
-          </View> 
-        // </View>
+        </View>
       ) : (
         <View style={{flex: 15}}></View>
-      )} 
+      )}
     </KeyboardAvoidingView>
   );
 }

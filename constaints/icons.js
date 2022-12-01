@@ -24,5 +24,5 @@ export default {
   settings:require('../asset/settings.png'),
   food:require('../asset/dish.png'),
   electricity:require('../asset/electricity.png'),
-
+  shoppimg:require('../asset/shopping.png'),
 };

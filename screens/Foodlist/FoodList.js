@@ -23,44 +23,6 @@ import FoodItem from './FoodItems';
 
 function FoodList(props) {
   const [food, setFood] = useState(DataFList);
-  const [categories, setCategories] = useState([
-    {
-      name: 'bánh mì',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/0/0c/B%C3%A1nh_m%C3%AC_th%E1%BB%8Bt_n%C6%B0%E1%BB%9Bng.png',
-    },
-    {
-      name: 'trà sữa',
-      url: 'https://cdn.dayphache.edu.vn/wp-content/uploads/2020/02/mon-tra-sua-tran-chau.jpg',
-    },
-    {
-      name: 'cơm',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/C%C6%A1m_T%E1%BA%A5m%2C_Da_Nang%2C_Vietnam.jpg/375px-C%C6%A1m_T%E1%BA%A5m%2C_Da_Nang%2C_Vietnam.jpg',
-    },
-    {
-      name: 'bún-phở',
-      url: 'https://bep360.net/wp-content/uploads/2021/05/bun-bo-hue.jpg',
-    },
-    {
-      name: 'cà phê',
-      url: 'https://nld.mediacdn.vn/2020/9/19/intro-1594766282-1600504778592231123885.jpg',
-    },
-    {
-      name: 'nước ép',
-      url: 'https://cdn.hellobacsi.com/wp-content/uploads/2021/11/nuoc-ep-hoa-qua-650x434.jpg',
-    },
-    {
-      name: 'đồ ăn vặt',
-      url: 'https://kenh14cdn.com/2018/9/17/met-do-chien-4-1537147860271397731701.jpg',
-    },
-    {
-      name: 'hoa quả',
-      url: 'https://hoaquafuji.com/storage/app/media/NEWS/cac-loai-trai-cay-nhap-khau.jpg',
-    },
-    {
-      name: 'Gà rán',
-      url: 'https://ameovat.com/wp-content/uploads/2016/05/cach-lam-ga-ran.jpg',
-    },
-  ]);
   const [seach, setSeach] = useState('');
   const fillteredFood = () =>
     food.filter(eachfood =>
@@ -101,78 +63,12 @@ function FoodList(props) {
             height: 35,
             width: 35,
           }}
-          source={icons.menu}
+          source={icons.shoppimg}
         />
       </View>
       <View style={{height: 1, backgroundColor: 'black'}} />
-      <View
-        style={{
-          height: 100,
-        }}>
-        <FlatList
-          data={categories}
-          keyExtractor={item => item.name}
-          horizontal
-          renderItem={({item}) => {
-            return (
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  style={{
-                    height: 45,
-                    width: 45,
-                    resizeMode: 'cover',
-                    borderRadius: 25,
-                    margin: 15,
-                  }}
-                  source={{
-                    uri: item.url,
-                  }}
-                />
-                <Text
-                  style={{
-                    color: 'black',
-                  }}>
-                  {item.name}
-                </Text>
-              </View>
-            );
-          }}
-          style={{
-            flex: 1,
-          }}
-        />
-
-        <View
-          style={{
-            height: 1,
-            backgroundColor: 'black',
-          }}
-        />
-      </View>
-      <View>
-        {/* <ScrollView>
-          <View style ={{
-           padding:15
-          }}>
-            <Text
-              style={{
-                fontSize: fontSize.h0,
-                color: 'red',
-                alignSelf: 'center',
-                textDecorationLine: 'underline',
-              }}>
-              Bun-pho-mien
-            </Text>
-          </View>
-          {food.map(eachfood => (
-            <FoodItem food={eachfood} key={eachfood.name} />
-          ))}
-        </ScrollView> */}
-      </View>
+      
+      
       {fillteredFood().length ? (
         <FlatList
           data={fillteredFood()}
