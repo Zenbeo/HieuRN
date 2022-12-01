@@ -16,6 +16,7 @@ import {
   Profile,
   Chat,
   Muitichoice,
+  SettingFList,
 } from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {colors} from '../constaints/colors';
@@ -38,12 +39,8 @@ const screenOptions = ({route}) => ({
       iconName = icons.electricity;
     } else if (screemName == 'FoodList') {
       iconName = icons.food;
-    } else if (screemName == 'Settings') {
+    } else if (screemName == 'SettingFList') {
       iconName = icons.settings;
-    } else if (screemName == 'Muitichoice') {
-      iconName = '';
-    } else if (screemName == 'SingleChoice') {
-      iconName = '';
     }
     return (
       //chỉ dùng dk 1 image
@@ -66,7 +63,7 @@ function UITap(props) {
       <Tab.Screen name={'FoodList'} component={FoodList} />
       <Tab.Screen name={'History'} component={History} />
       <Tab.Screen name={'ProductGridView'} component={ProductGridView} />
-      <Tab.Screen name={'Settings'} component={Settings} />
+      <Tab.Screen name={'SettingFList'} component={SettingFList} />
       <Tab.Screen name="Processing" component={Processing} />
     </Tab.Navigator>
   );

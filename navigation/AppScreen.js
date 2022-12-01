@@ -31,6 +31,7 @@ import { Login, MainScreen } from '../screens'
 import MuiltiChoice from '../screens/Muitichoice'
 import ContextProvider from './Context/ContextProvider'
 function AppScreen(props) {
+    
     const Stack = createNativeStackNavigator()//lien ket tab
     return <ContextProvider>
     <NavigationContainer>
