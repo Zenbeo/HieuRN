@@ -52,12 +52,6 @@ console.log(user)
         // flexDirection:'row',
         backgroundColor: 'white',
       }}>
-      {/* <View
-      style={{
-       //flex :100
-        // flexDirection:'column',
-        // justifyContent:'center',
-      }}> */}
       <View
         style={{
           flex: 40,
