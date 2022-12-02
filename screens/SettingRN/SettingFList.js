@@ -101,7 +101,7 @@ function SettingFList(props) {
                 })}
 
                 <View style={{backgroundColor: colors.inactive}}>
-                  <Text style={{}}>Account</Text>
+                  <Text style={{  }}>Account</Text>
                 </View>
                 {item.Account.map(i => {
                   return (

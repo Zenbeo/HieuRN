@@ -13,11 +13,9 @@ import {
   FlatList,
   Dimensions
 } from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {images, icons, fontSize} from '../../constaints';
+import { icons } from '../../constaints';
 import { colors } from '../../constaints/colors';
 
-import {isValidEmail, isValidPassword} from '../../utilies/validations';
 import { DataFList } from './DataList';
 import FoodItem from './FoodItems';
 
@@ -51,7 +49,7 @@ function FoodList(props) {
             marginEnd: 5,
             backgroundColor: colors.silver,
             borderRadius: 7,
-            fontSize: fontSize.h4,
+            fontSize: 20,
             paddingStart: 10,
           }}
           placeholder="nhập món ăn bạn chọn"
@@ -95,7 +93,7 @@ function FoodList(props) {
           <Text
             style={{
               color: 'black',
-              fontSize: fontSize.h2,
+              fontSize: 15,
             }}>
             No food found
           </Text>

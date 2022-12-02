@@ -22,7 +22,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {colors} from '../constaints/colors';
 import {Image} from 'react-native';
 import {fontSize, icons} from '../constaints';
-import Order from '../screens/Order/Order';
 import History from '../screens/Order/History';
 import Processing from '../screens/Order/Processing';
 // import {colors,fontSize} from '../constaints'

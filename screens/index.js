@@ -6,7 +6,9 @@ import Settings from './SettingRN/Settings';
 import Profile from './Profile';
 import AppScreen from '../navigation/AppScreen';
 import SettingFList from './SettingRN/SettingFList';
-import   Muitichoice from './Muitichoice'
+import   Muitichoice from './Muitichoice';
+import History from './Order/History';
+import Processing from './Order/Processing';
 export {
     MainScreen,
     Login,
@@ -16,6 +18,8 @@ export {
     Profile,
     AppScreen,
     SettingFList,
-    Muitichoice
+    Muitichoice,
+    History,
+    Processing
     
     };

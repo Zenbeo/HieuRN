@@ -59,15 +59,7 @@ console.log(user)
           alignItems: 'center',
           justifyContent: 'space-around',
         }}>
-        <Text
-          style={{
-            color: 'black',
-            fontSize: fontSize.h0,
-            fontWeight: 'bold',
-            width: '50%',
-          }}>
-          Already have an Account?
-        </Text>
+      
         <Image
           tintColor="blue" //màu icons
           source={images.computers}
