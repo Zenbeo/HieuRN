@@ -42,7 +42,8 @@ function FoodItem(props){
           
             style={{
               height: 200,
-              paddingTop: 10,
+             marginTop:10,
+             marginBottom:-50,
               paddingStart: 10,
               flexDirection: 'row',
             }}>

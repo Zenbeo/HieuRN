@@ -11,18 +11,20 @@ import {
   Keyboard,
 } from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+
 import {UIHearder} from '../Button';
 import {images, icons, fontSize} from '../constaints';
+import { colors } from '../constaints/colors';
 import ContextProvider from '../navigation/Context/ContextProvider';
 import UITap from '../navigation/UITap';
 import {isValidEmail, isValidPassword} from '../utilies/validations';
+import HomeMain from './Home/HomeMain';
 
 function Login(props) {
   //navigation
-  const {navigation, rount} = props;
-  //function of navigate to/back
-  const {navigate, goBack} = navigation;
+  // const {navigation, rount} = props;
+  // //function of navigate to/back
+  // const {navigate, goBack} = navigation;
 
   //state
   const [errorEmail, setErrorEmail] = useState('');
@@ -50,7 +52,7 @@ console.log(user)
       style={{
         flex: 100,
         // flexDirection:'row',
-        backgroundColor: 'white',
+        backgroundColor:'#99CCFF',
       }}>
       <View
         style={{
@@ -165,12 +167,12 @@ console.log(user)
       {keyboardIsShow == false ? (
         <View //nếu bàn phím ko hiện thì nút Login hiện
           style={{
-            flex: 15,
+            flex: 20,
           }}>
           <TouchableOpacity
-            onPress={() => {
+            onPress={() => {HomeMain
               //alert('Email=${email},PassWord =${passWord}');
-              navigate(UITap);
+              
             }}
             style={{
               justifyContent: 'center',
@@ -178,13 +180,15 @@ console.log(user)
               backgroundColor: '#0066FF',
               alignSelf: 'center',
               width: '60%',
+              height:45,
               borderRadius: 20, // bo bán kính
             }}>
             <Text
               style={{
                 padding: 7,
-                fontSize: fontSize.h4,
-                color: ' red',
+                fontSize: fontSize.h3,
+              color:colors.grey,
+                
               }}>
               Login
             </Text>

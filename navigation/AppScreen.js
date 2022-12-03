@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UITab from './UITap';
 import HomeMain from '../screens/Home/HomeMain';
+import { Login } from '../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,8 @@ function Navigation() {
     <NavigationContainer >
       <Stack.Navigator initialRouteName='HomeMain'  screenOptions={{headerShown:false}}>
       <Stack.Screen name="HomeMain" component={HomeMain} />
-        <Stack.Screen name="UITab" component={UITab} />
+      <Stack.Screen name="Login" component={Login} />
+        {/* <Stack.Screen name="UITab" component={UITab} /> */}
       </Stack.Navigator>
     </NavigationContainer>
     
