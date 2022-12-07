@@ -60,10 +60,9 @@ function UITap(props) {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen name={'FoodList'} component={FoodList} />
-      <Tab.Screen name={'History'} component={History} />
       <Tab.Screen name={'ProductGridView'} component={ProductGridView} />
-      <Tab.Screen name={'SettingFList'} component={SettingFList} />
-      <Tab.Screen name="Processing" component={Processing} />
+      <Tab.Screen name={'Settings'} component={Settings} />
+      {/* <Tab.Screen name="Processing" component={Processing} /> */}
     </Tab.Navigator>
   );
 }

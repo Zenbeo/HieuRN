@@ -11,30 +11,48 @@ import {
   Keyboard,
   ScrollView,
   FlatList,
-  Dimensions
+  Dimensions,
+  Alert,
 } from 'react-native';
-import { icons } from '../../constaints';
-import { colors } from '../../constaints/colors';
+import {icons} from '../../constaints';
+import {colors} from '../../constaints/colors';
 
-import { DataFList } from './DataList';
+import {DataFList} from './DataList';
 import FoodItem from './FoodItems';
 
-function FoodList(props) {
+
+function FoodList( {navigation}) {
   const [food, setFood] = useState(DataFList);
   const [seach, setSeach] = useState('');
   const fillteredFood = () =>
     food.filter(eachfood =>
       eachfood.name.toLowerCase().includes(seach.toLowerCase()),
     );
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View
+       <View
         style={{
           marginVertical: 10, //cách khoảng xung quanh
           marginHorizontal: 10,
           alignItems: 'center',
           flexDirection: 'row',
+          backgroundColor:colors.Orgent
         }}>
+          <View style={{width:40 }}>
+          <TouchableOpacity
+          onPress={()=>navigation.goBack()}>
+          <Image
+          style={{
+            marginHorizontal: 5,
+            height: 30,
+            width: 30,
+            tintColor:'black'
+          }}
+          source={icons.back}
+        />
+          </TouchableOpacity>
+          </View>
         <TextInput
           autoCorrect={false} // tắt tự động sửa
           onChangeText={text => {
@@ -55,26 +73,28 @@ function FoodList(props) {
           placeholder="nhập món ăn bạn chọn"
           placeholderTextColor={colors.black}
         />
-        <Image
+         <TouchableOpacity 
+         onPress={()=>Alert.alert(' Giỏ hàng',' mời bạn thêm ')}>
+         <Image
           style={{
             marginHorizontal: 5,
-            height: 35,
+            height: 40,
             width: 35,
+            tintColor:'black'
           }}
           source={icons.shoppimg}
         />
-      </View>
+         </TouchableOpacity>
+        </View>
       <View style={{height: 1, backgroundColor: 'black'}} />
-      
-      
+
       {fillteredFood().length ? (
         <FlatList
           data={fillteredFood()}
           ListFooterComponent={() => {
-            return <View style={{flex:1}} />;
+            return <View style={{flex: 1}} />;
           }}
           renderItem={({item}) => (
-
             <FoodItem
               onPress={() => {
                 alert(`Bạn muốn chọn ' ${item.name} '`);
@@ -83,23 +103,34 @@ function FoodList(props) {
             />
           )}
           keyExtractor={eachfood => eachfood.name}
-        />) : (<View
+        />
+      ) : (
+        <View
           style={{
             flex: 1,
-
             justifyContent: 'center',
             alignItems: 'center',
           }}>
+            <Image 
+
+            />
           <Text
             style={{
-              color: 'black',
-              fontSize: 15,
+              color: 'red',
+              fontSize: 20,
             }}>
-            No food found
+            Món bạn chọn không có 
+          </Text>
+          <Text
+            style={{
+              color: 'red',
+              fontSize: 20,
+            }}>
+           Vui lòng chọn món khác
           </Text>
         </View>
       )}
     </View>
   );
 }
-export default FoodList
+export default FoodList;

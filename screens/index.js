@@ -7,6 +7,7 @@ import AppScreen from '../navigation/AppScreen';
 import SettingFList from './SettingRN/SettingFList';
 import History from './Order/History';
 import Processing from './Order/Processing';
+import HomeMain from './Home/HomeMain';
 export {
     MainScreen,
     Login,
@@ -16,6 +17,7 @@ export {
     AppScreen,
     SettingFList,
     History,
-    Processing
+    Processing,
+    HomeMain
     
     };

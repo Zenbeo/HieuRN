@@ -9,18 +9,19 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  StyleSheet,
+  Dimensions
 } from 'react-native';
-
 
 import {UIHearder} from '../Button';
 import {images, icons, fontSize} from '../constaints';
-import { colors } from '../constaints/colors';
+import {colors} from '../constaints/colors';
 import ContextProvider from '../navigation/Context/ContextProvider';
 import UITap from '../navigation/UITap';
 import {isValidEmail, isValidPassword} from '../utilies/validations';
 import HomeMain from './Home/HomeMain';
 
-function Login(props) {
+function Login({navigation}) {
   //navigation
   // const {navigation, rount} = props;
   // //function of navigate to/back
@@ -44,7 +45,7 @@ function Login(props) {
   });
 
   const user = useContext(ContextProvider);
-console.log(user)
+  console.log(user);
 
   return (
     <KeyboardAvoidingView
@@ -52,28 +53,22 @@ console.log(user)
       style={{
         flex: 100,
         // flexDirection:'row',
-        backgroundColor:'#99CCFF',
+        backgroundColor: 'white',
+
       }}>
+        
       <View
-        style={{
-          flex: 40,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-around',
-        }}>
-      
+      style={styles.ViewBackground}
+      >
+        {/* <Text style={styles.TextBackground}>ĐẶT ĐỒ UỐNG </Text> */}
         <Image
           tintColor="blue" //màu icons
           source={images.computers}
-          style={{
-            height: 120,
-            width: 120,
-            fontWeight: 'bold',
-            // backgroundColor: 'blue',
-            alignSelf: 'center',
-          }}
+          style={styles.Image}
         />
+        
       </View>
+      <View style={{ margin:20}}/>
       <View
         style={{
           flex: 30,
@@ -102,21 +97,11 @@ console.log(user)
             }}
             placeholder="example@gmail.com"
             placeholderTextColor={'rgba(0,0,0,0.6)'}
-            // value={'hieu@gmail.com'}
-            onChange={setEmail}
+            value={'hieu@gmail.com'}
+            // value={email}
           />
-          <View
-            style={{
-              //tạo dòng gạch chân
-              height: 1,
-              backgroundColor: 'black',
-              width: '100%',
-              marginBottom: 5,
-              marginHorizontal: 15,
-              alignSelf: 'center',
-            }}
-          />
-          <Text style={{color: 'red', marginBottom: 15}}>{errorEmail}</Text>
+          <View style={styles.ViewEmail} />
+          <Text style={styles.ErrorText}>{errorEmail}</Text>
         </View>
         <View
           style={{
@@ -147,20 +132,11 @@ console.log(user)
             placeholder="Enter your password"
             placeholderTextColor={'rgba(0,0,0,0.6)'}
             secureTextEntry={true} //tính bảo mật ****
-            // value={'hhhh'}
-            onChange={setPassWord}
+            value={'hhhh'}
+            // value={password}
           />
-          <View
-            style={{
-              height: 1,
-              backgroundColor: 'black',
-              width: '100%',
-              marginBottom: 5,
-              marginHorizontal: 15,
-              alignSelf: 'center',
-            }}
-          />
-          <Text style={{color: 'red', marginBottom: 15}}>{errorPassword}</Text>
+          <View style={styles.ViewPassword} />
+          <Text style={styles.ErrorText}>{errorPassword}</Text>
         </View>
       </View>
 
@@ -170,28 +146,11 @@ console.log(user)
             flex: 20,
           }}>
           <TouchableOpacity
-            onPress={() => {HomeMain
-              //alert('Email=${email},PassWord =${passWord}');
-              
-            }}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#0066FF',
-              alignSelf: 'center',
-              width: '60%',
-              height:45,
-              borderRadius: 20, // bo bán kính
-            }}>
-            <Text
-              style={{
-                padding: 7,
-                fontSize: fontSize.h3,
-              color:colors.grey,
-                
-              }}>
-              Login
-            </Text>
+            onPress={() =>
+               navigation.navigate('HomeMain')
+              }
+            style={styles.TouchLogin}>
+            <Text style={styles.TextLogin}>Đăng nhập</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -217,18 +176,7 @@ console.log(user)
                 backgroundColor: 'black',
               }}
             />
-            <Text
-              style={{
-                // width: 160,
-                // textAlign: 'center',
-                padding: 8,
-                fontSize: fontSize.h5,
-                color: 'black',
-                alignSelf: 'center',
-                marginHorizontal: 5,
-              }}>
-              Use other methods?
-            </Text>
+            <Text style={styles.TextDown}>Use other methods?</Text>
             <View
               style={{
                 flex: 1,
@@ -245,3 +193,70 @@ console.log(user)
   );
 }
 export default Login;
+const {width, height} = Dimensions.get('window')
+const styles = StyleSheet.create({
+  ViewBackground: {
+    flex: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor:colors.Orgent,
+    borderBottomLeftRadius:30,
+    borderBottomRightRadius:30
+  },
+  TextBackground:{
+    fontSize:30,
+    color:'blue',
+
+  },
+  Image: {
+    height: 150,
+    width: 150,
+    fontWeight: 'bold',
+    // backgroundColor: 'blue',
+    alignSelf: 'center',
+  },
+  TouchLogin: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.bluesky,
+    alignSelf: 'center',
+    width: '60%',
+    height: 45,
+    borderRadius: 20, // bo bán kính
+  },
+  TextLogin: {
+    padding: 7,
+    fontSize: fontSize.h2,
+    color: colors.white,
+  },
+
+  TextDown: {
+    padding: 8,
+    fontSize: fontSize.h5,
+    color: 'black',
+    alignSelf: 'center',
+    marginHorizontal: 5,
+  },
+  ViewPassword: {
+    height: 1,
+    backgroundColor: 'black',
+    width: '100%',
+    marginBottom: 5,
+    marginHorizontal: 15,
+    alignSelf: 'center',
+  },
+  ViewEmail: {
+    //tạo dòng gạch chân
+    height: 1,
+    backgroundColor: 'black',
+    width: '100%',
+    marginBottom: 5,
+    marginHorizontal: 15,
+    alignSelf: 'center',
+  },
+  ErrorText: {
+    color: 'red',
+    marginBottom: 15,
+  },
+});
