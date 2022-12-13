@@ -10,23 +10,30 @@ import {
   Platform,
   Keyboard,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 
-import {UIHearder} from '../Button';
 import {images, icons, fontSize} from '../constaints';
 import {colors} from '../constaints/colors';
-import ContextProvider from '../navigation/Context/ContextProvider';
+// import ContextProvider from '../navigation/Context/ContextProvider';
 import UITap from '../navigation/UITap';
 import {isValidEmail, isValidPassword} from '../utilies/validations';
 import HomeMain from './Home/HomeMain';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as yup from 'yup';
+import {Controller, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+
+// const schema = yup.object().shape({
+//   name: yup.string().required(),
+//   password: yup.string().required().min(6, 'it nhat 6 ki tu'),
+// });
+// interface IFormInputs {
+//   name: string;
+//   password: string;
+// }
 
 function Login({navigation}) {
-  //navigation
-  // const {navigation, rount} = props;
-  // //function of navigate to/back
-  // const {navigate, goBack} = navigation;
-
   //state
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassWord] = useState('');
@@ -43,9 +50,22 @@ function Login({navigation}) {
       setKeyboardIsShow(false);
     });
   });
-
-  const user = useContext(ContextProvider);
-  console.log(user);
+const UserNameHandler=text => {
+  setErrorEmail(
+    isValidEmail(text) == true ? '' : 'Tài khoản không đúng',
+  );
+  setEmail(text);
+}
+const PasWordHandler=text => {
+  // cập nhật thay đổi thông tin
+  setErrorPassWord(
+    isValidPassword(text) == true
+      ? ''
+      : 'Mật khẩu phải trên 3 kí tự',
+  );
+  setPassWord(text);
+}
+  // const user = useContext(ContextProvider);
 
   return (
     <KeyboardAvoidingView
@@ -54,21 +74,16 @@ function Login({navigation}) {
         flex: 100,
         // flexDirection:'row',
         backgroundColor: 'white',
-
       }}>
-        
-      <View
-      style={styles.ViewBackground}
-      >
+      <View style={styles.ViewBackground}>
         {/* <Text style={styles.TextBackground}>ĐẶT ĐỒ UỐNG </Text> */}
         <Image
           tintColor="blue" //màu icons
           source={images.computers}
           style={styles.Image}
         />
-        
       </View>
-      <View style={{ margin:20}}/>
+      <View style={{margin: 20}} />
       <View
         style={{
           flex: 30,
@@ -77,66 +92,38 @@ function Login({navigation}) {
           style={{
             marginHorizontal: 15,
           }}>
-          <Text
-            style={{
-              color: 'blue',
-              fontSize: fontSize.h4,
-              //fontWeight: 'bold',
-            }}>
-            Email:{' '}
-          </Text>
+          <Text style={styles.titleName}>Tài khoản: </Text>
           <TextInput
-            onChangeText={text => {
-              setErrorEmail(
-                isValidEmail(text) == true ? '' : 'Email not in corect format',
-              );
-              setEmail(text);
-            }}
-            style={{
-              color: 'black',
-            }}
-            placeholder="example@gmail.com"
+            onChangeText={UserNameHandler}
+            style={styles.userText}
+            placeholder="Nhập tài khoản của bạn"
             placeholderTextColor={'rgba(0,0,0,0.6)'}
-            value={'hieu@gmail.com'}
-            // value={email}
+            // value={'hieu@gmail.com'}
+            value={email}
+            // ref='userText'
+            // autoFocus={true}
+            // onEndEditing={(text)=>{this.refs.passwordText.focus()}}//
           />
           <View style={styles.ViewEmail} />
-          <Text style={styles.ErrorText}>{errorEmail}</Text>
+          {<Text style={styles.ErrorText}>{errorEmail}</Text>}
         </View>
         <View
           style={{
             marginHorizontal: 15,
           }}>
-          <Text
-            style={{
-              color: 'blue',
-              fontSize: fontSize.h4,
-              // fontWeight: 'bold',
-            }}>
-            Password:{' '}
-          </Text>
+          <Text style={styles.titleName}>Mật khẩu: </Text>
           <TextInput
-            onChangeText={text => {
-              // cập nhật thay đổi thông tin
-              setErrorPassWord(
-                isValidPassword(text) == true
-                  ? ''
-                  : 'Password must be at least 3 char',
-              );
-              setPassWord(text);
-            }}
-            style={{
-              color: 'black',
-              // borderBottomWidth:1
-            }}
-            placeholder="Enter your password"
+            onChangeText={PasWordHandler}
+            style={styles.passwordText}
+            placeholder="Nhập mật khẩu của bạn "
             placeholderTextColor={'rgba(0,0,0,0.6)'}
             secureTextEntry={true} //tính bảo mật ****
-            value={'hhhh'}
-            // value={password}
+            // value={'hhhh'}
+            value={password}
+            // ref='passwordText'
           />
           <View style={styles.ViewPassword} />
-          <Text style={styles.ErrorText}>{errorPassword}</Text>
+          {<Text style={styles.ErrorText}>{errorPassword}</Text>}
         </View>
       </View>
 
@@ -144,14 +131,21 @@ function Login({navigation}) {
         <View //nếu bàn phím ko hiện thì nút Login hiện
           style={{
             flex: 20,
+            // marginTop:35
           }}>
           <TouchableOpacity
-            onPress={() =>
-               navigation.navigate('HomeMain')
-              }
+            onPress={() => navigation.navigate('HomeMain')}
             style={styles.TouchLogin}>
             <Text style={styles.TextLogin}>Đăng nhập</Text>
           </TouchableOpacity>
+          <View style={styles.ViewDki}>
+            <Text
+              style={styles.TextDki}
+              onPress={() => navigation.navigate('Register')}>
+              Đăng kí
+            </Text>
+            <View style={{borderWidth: 0.2, width: 80}} />
+          </View>
         </View>
       ) : (
         <View></View>
@@ -176,7 +170,7 @@ function Login({navigation}) {
                 backgroundColor: 'black',
               }}
             />
-            <Text style={styles.TextDown}>Use other methods?</Text>
+            
             <View
               style={{
                 flex: 1,
@@ -193,21 +187,20 @@ function Login({navigation}) {
   );
 }
 export default Login;
-const {width, height} = Dimensions.get('window')
+const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   ViewBackground: {
-    flex: 40,
+    flex: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor:colors.Orgent,
-    borderBottomLeftRadius:30,
-    borderBottomRightRadius:30
+    backgroundColor: colors.Orgent,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
-  TextBackground:{
-    fontSize:30,
-    color:'blue',
-
+  TextBackground: {
+    fontSize: 30,
+    color: 'blue',
   },
   Image: {
     height: 150,
@@ -258,5 +251,25 @@ const styles = StyleSheet.create({
   ErrorText: {
     color: 'red',
     marginBottom: 15,
+  },
+  userText: {
+    color: 'black',
+  },
+  passwordText: {
+    color: 'black',
+  },
+  titleName: {
+    color: 'blue',
+    fontSize: fontSize.h4,
+    fontWeight: 'bold',
+  },
+  ViewDki: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+  },
+  TextDki: {
+    fontSize: 18,
+    color: 'black',
   },
 });

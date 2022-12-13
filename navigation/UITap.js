@@ -49,7 +49,7 @@ const screenOptions = ({route}) => ({
           marginEnd: 5,
           width: 30,
           height: 30,
-          tintColor: focused ? 'red' : 'blue',
+          tintColor: focused ? colors.Orgent : 'blue',
         }}
         source={iconName}
       />
@@ -61,8 +61,7 @@ function UITap(props) {
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen name={'FoodList'} component={FoodList} />
       <Tab.Screen name={'ProductGridView'} component={ProductGridView} />
-      <Tab.Screen name={'Settings'} component={Settings} />
-      {/* <Tab.Screen name="Processing" component={Processing} /> */}
+     
     </Tab.Navigator>
   );
 }

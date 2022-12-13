@@ -25,4 +25,5 @@ export default {
   shoppimg:require('../asset/shopping.png'),
   back:require('../asset/back.png'),
   search:require('../asset/search.png'),
+  table: require('../asset/table.png')
 };

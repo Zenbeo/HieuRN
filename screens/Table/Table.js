@@ -14,31 +14,16 @@ import {
 } from 'react-native';
 import {images, icons, fontSize} from '../../constaints';
 import {colors} from '../../constaints/colors';
-//import colors from '../../constaints/colors';
-import { ListData } from './GridView';
+import { dataItem } from './TableItem';
+//import colors from '../../constaints/col
 
-function ProductGridView(props) {
+function Table({navigation}) {
   const [check, setCheck] = useState(false);
-  const [product, setProduct] = useState(ListData);
+  const [product, setProduct] = useState(dataItem);
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       {/* <Settings/> */}
-      <View
-        style={{
-          height: 60,
-          backgroundColor: colors.Orgent,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text
-          style={{
-            fontSize: fontSize.h2,
-            color: colors.black1,
-            fontWeight: 'bold',
-          }}>
-          Máy Hút Bụi
-        </Text>
-      </View>
+     
       <FlatList
         data={product}
         numColumns={2} //chia đôi man
@@ -74,41 +59,7 @@ function ProductGridView(props) {
                   uri: item.url,
                 }}
               />
-              <Text
-                style={{
-                  marginLeft: 10,
-                  marginTop: 10,
-                  color: colors.black1,
-                  fontSize: fontSize.h3,
-                }}>
-                ${item.price}
-              </Text>
-            </View>
-            <View
-              style={{
-                marginLeft: 10,
-                fontSize: 13,
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: colors.blue,
-                  fontSize: 13,
-                }}>
-                {item.nameProduct}
-              </Text>
-              {/* chia tung phan tu trong specifications */}
-              {item.specifications.map(specifications => (
-                <Text
-                  key={specifications}
-                  style={{
-                    color: colors.black1,
-                    fontSize: 13,
-                    padding: 1,
-                  }}>
-                  * {specifications}
-                </Text>
-              ))}
+              
             </View>
             <View
               style={{
@@ -168,7 +119,7 @@ function ProductGridView(props) {
                     justifyContent: 'flex-end',
                     marginTop: 5,
                   }}>
-                  {Array.from(Array(item.stars)).map(item => (
+                
                     <Image
                       style={{
                         height: 11,
@@ -177,7 +128,7 @@ function ProductGridView(props) {
                       }}
                       source={icons.star}
                     />
-                  ))}
+                  
                 </View>
                 {/* Hien View */}
                 <Text
@@ -198,4 +149,4 @@ function ProductGridView(props) {
     </View>
   );
 }
-export default ProductGridView;
+export default Table;

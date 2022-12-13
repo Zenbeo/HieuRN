@@ -13,6 +13,7 @@ import {
   FlatList,
   Dimensions,
   Alert,
+  StyleSheet,
 } from 'react-native';
 import {icons} from '../../constaints';
 import {colors} from '../../constaints/colors';
@@ -32,23 +33,12 @@ function FoodList( {navigation}) {
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
        <View
-        style={{
-          marginVertical: 10, //cách khoảng xung quanh
-          marginHorizontal: 10,
-          alignItems: 'center',
-          flexDirection: 'row',
-          backgroundColor:colors.Orgent
-        }}>
+        style={styles.ViewButton}>
           <View style={{width:40 }}>
           <TouchableOpacity
           onPress={()=>navigation.goBack()}>
           <Image
-          style={{
-            marginHorizontal: 5,
-            height: 30,
-            width: 30,
-            tintColor:'black'
-          }}
+          style={styles.IconsBack}
           source={icons.back}
         />
           </TouchableOpacity>
@@ -61,27 +51,14 @@ function FoodList( {navigation}) {
           }}
           //blurOnSubmit={true}//ẩn bàn phím khi ko muons ấn
           //onSubmitEditing={()=>{Keyboard.dismiss()}}
-          style={{
-            height: 40,
-            flex: 1,
-            marginEnd: 5,
-            backgroundColor: colors.silver,
-            borderRadius: 7,
-            fontSize: 20,
-            paddingStart: 10,
-          }}
+          style={styles.InputSearch}
           placeholder="nhập món ăn bạn chọn"
           placeholderTextColor={colors.black}
         />
          <TouchableOpacity 
-         onPress={()=>Alert.alert(' Giỏ hàng',' mời bạn thêm ')}>
+         onPress={()=>navigation.navigate('CartScreen')}>
          <Image
-          style={{
-            marginHorizontal: 5,
-            height: 40,
-            width: 35,
-            tintColor:'black'
-          }}
+          style={styles.Images}
           source={icons.shoppimg}
         />
          </TouchableOpacity>
@@ -115,17 +92,11 @@ function FoodList( {navigation}) {
 
             />
           <Text
-            style={{
-              color: 'red',
-              fontSize: 20,
-            }}>
+            style={styles.Text}>
             Món bạn chọn không có 
           </Text>
           <Text
-            style={{
-              color: 'red',
-              fontSize: 20,
-            }}>
+            style={styles.Text}>
            Vui lòng chọn món khác
           </Text>
         </View>
@@ -134,3 +105,38 @@ function FoodList( {navigation}) {
   );
 }
 export default FoodList;
+
+const styles=StyleSheet.create({
+  ViewButton:{
+    marginVertical: 10, //cách khoảng xung quanh
+    marginHorizontal: 10,
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor:colors.Orgent
+  },
+  InputSearch:{
+    height: 40,
+    flex: 1,
+    marginEnd: 5,
+    backgroundColor: colors.grey,
+    // borderRadius: 7,
+    fontSize: 20,
+    paddingStart: 10,
+  },
+  Images:{
+    marginHorizontal: 5,
+    height: 40,
+    width: 35,
+    tintColor:'black'
+  },
+  IconsBack:{
+    marginHorizontal: 5,
+    height: 30,
+    width: 30,
+    tintColor:'black'
+  },
+Text:{
+  color: 'red',
+  fontSize: 20,
+}
+})
