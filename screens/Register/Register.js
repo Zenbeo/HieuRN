@@ -93,9 +93,6 @@ export default function Register({navigation}) {
             placeholderTextColor={'rgba(0,0,0,0.6)'}
             // value={'hieu@gmail.com'}
             value={email}
-            // ref='userText'
-            // autoFocus={true}
-            // onEndEditing={(text)=>{this.refs.passwordText.focus()}}//
           />
           <View style={styles.ViewEmail} />
           {<Text style={styles.ErrorText}>{errorEmail}</Text>}
@@ -113,7 +110,6 @@ export default function Register({navigation}) {
             secureTextEntry={true} //tính bảo mật ****
             // value={'hhhh'}
             value={password}
-            // ref='passwordText'
           />
           <View style={styles.ViewPassword} />
           {<Text style={styles.ErrorText}>{errorPassword}</Text>}
@@ -131,7 +127,6 @@ export default function Register({navigation}) {
             secureTextEntry={true} //tính bảo mật ****
             // value={'hhhh'}
             value={checkPassword}
-            // ref='passwordText'
           />
           <View style={styles.ViewPassword} />
           {<Text style={styles.ErrorText}>{errorCheckPassword}</Text>}
@@ -142,7 +137,6 @@ export default function Register({navigation}) {
         <View //nếu bàn phím ko hiện thì nút Login hiện
           style={{
             flex: 15,
-            // marginTop:35
           }}>
           <TouchableOpacity onPress={NotifineHandler} style={styles.TouchLogin}>
             <Text style={styles.TextLogin}>Đăng ký</Text>
