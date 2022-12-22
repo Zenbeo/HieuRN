@@ -3,15 +3,16 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { History, HomeMain, Login, Processing, Table } from '../screens';
-import UITap from './UITap';
+import { FoodList, History, HomeMain, Login, Processing, Table } from '../screens';
 import ContextProvider from './Context/ContextProvider';
 import CartScreen from '../screens/Cart/CartScreen';
 import Register from '../screens/Register/Register';
+import LoadingScreen from '../screens/Home/LoadingScreen';
+import ProductDetails from '../screens/Foodlist/ProductDetails';
 const Stack = createNativeStackNavigator();
 
 export default function AppScreen() {
-  const user = React.useContext(ContextProvider);
+  // const user = React.useContext(ContextProvider);
 
   // React.useEffect(() => {
   //   AsyncStorage.getItem('userName')
@@ -24,17 +25,25 @@ export default function AppScreen() {
   //     })
   //     .catch(e => console.log(e));
   // }, []);
+
   return (
+    <ContextProvider>
     <NavigationContainer>
-    <Stack.Navigator>
-    {/* {!user?.user?.name ? ( */}
+    <Stack.Navigator initialRouteName='Login'>
+   {/* {!user?.user?.name ? ( */}
           <Stack.Screen
             name="Login"
             component={Login}
             options={{headerShown: false}}
           />
-          {/* ) : ( */}
+        {/* ) : (
+            <> */}
             
+               <Stack.Screen
+            name="LoadingScreen"
+            component={LoadingScreen}
+            options={{headerShown: false}}
+          />
            <Stack.Screen
             name="HomeMain"
             component={HomeMain}
@@ -51,11 +60,7 @@ export default function AppScreen() {
             component={Processing}
             options={{headerShown: false}}
           />
-           <Stack.Screen
-            name="UITap"
-            component={UITap}
-            options={{headerShown: false}}
-          />
+        
           <Stack.Screen
             name="CartScreen"
             component={CartScreen}
@@ -67,12 +72,25 @@ export default function AppScreen() {
             options={{headerShown: false}}
           />
           <Stack.Screen
+            name="FoodList"
+            component={FoodList}
+            options={{headerShown: false}}
+          />
+           <Stack.Screen
+            name="ProductDetails"
+            component={ProductDetails}
+            options={{headerShown: false}}
+          />
+             {/* </>
+             
+          )} */}
+           <Stack.Screen
             name="Register"
             component={Register}
             options={{headerShown: false}}
           />
-          {/* )} */}
         </Stack.Navigator>
       </NavigationContainer>
+      </ContextProvider>
   )
 }

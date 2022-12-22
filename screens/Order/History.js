@@ -13,14 +13,15 @@ import {images} from '../../constaints';
 import {ButtonBack} from '../../Button';
 
 export default function History({navigation}) {
+
   return (
     <View style={{}}>
-      <View style={{height: 60, backgroundColor: colors.Orgent,flexDirection:'row'}}>
+      <View style={styles.containerView}>
         <View style={{width:90,justifyContent:'center'}}>
     <ButtonBack onPress={()=>navigation.goBack()}/>
         </View >
-        <View style={{width:250, justifyContent:'center', alignItems:'center'}}>
-    <Text style={{fontSize:25,color:colors.black,}}> Lịch sử</Text>
+        <View style={styles.titlesView}>
+    <Text style={styles.TextTitles}> Lịch sử</Text>
         </View>
         <View style={{width:80}}/>
       </View>
@@ -29,15 +30,15 @@ export default function History({navigation}) {
         <View style={styles.orderRow}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: colors.black}}>Bàn số: </Text>
-            <Text style={{color: colors.black}}>1</Text>
+            <Text style={{color: colors.black}}>3</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: colors.black}}>Thời gian: </Text>
-            <Text style={{color: colors.black}}>12:00:03</Text>
+            <Text style={{color: colors.black}}>15:00:33</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: colors.black}}>Tổng tiền:</Text>
-            <Text style={{color: colors.black}}>1.000.000</Text>
+            <Text style={{color: colors.black}}>560.000</Text>
           </View>
         </View>
 
@@ -48,26 +49,72 @@ export default function History({navigation}) {
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: colors.black}}>Thời gian: </Text>
-            <Text style={{color: colors.black}}>15:06:03</Text>
+            <Text style={{color: colors.black}}>16:06:03</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: colors.black}}>Tổng tiền:</Text>
-            <Text style={{color: colors.black}}>500.000</Text>
+            <Text style={{color: colors.black}}>340.000</Text>
           </View>
         </View>
         <View style={styles.orderRow}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: colors.black}}>Bàn số: </Text>
-            <Text style={{color: colors.black}}>3</Text>
+            <Text style={{color: colors.black}}>6</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: colors.black}}>Thời gian: </Text>
-            <Text style={{color: colors.black}}>16:00:03</Text>
+            <Text style={{color: colors.black}}>16:30:13</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: colors.black}}>Tổng tiền:</Text>
-            <Text style={{color: colors.black}}>460.000</Text>
+            <Text style={{color: colors.black}}>660.000</Text>
           </View>
+          
+        </View>
+        <View style={styles.orderRow}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{color: colors.black}}>Bàn số: </Text>
+            <Text style={{color: colors.black}}>9</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{color: colors.black}}>Thời gian: </Text>
+            <Text style={{color: colors.black}}>17:39:13</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{color: colors.black}}>Tổng tiền:</Text>
+            <Text style={{color: colors.black}}>660.000</Text>
+          </View>
+          
+        </View>
+        <View style={styles.orderRow}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{color: colors.black}}>Bàn số: </Text>
+            <Text style={{color: colors.black}}>13</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{color: colors.black}}>Thời gian: </Text>
+            <Text style={{color: colors.black}}>17:33:13</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{color: colors.black}}>Tổng tiền:</Text>
+            <Text style={{color: colors.black}}>260.000</Text>
+          </View>
+          
+        </View>
+        <View style={styles.orderRow}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{color: colors.black}}>Bàn số: </Text>
+            <Text style={{color: colors.black}}>12</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{color: colors.black}}>Thời gian: </Text>
+            <Text style={{color: colors.black}}>17:30:13</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{color: colors.black}}>Tổng tiền:</Text>
+            <Text style={{color: colors.black}}>360.000</Text>
+          </View>
+          
         </View>
       </ScrollView>
     </View>
@@ -78,15 +125,27 @@ const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   Titles: {
     flex: 0.12,
-    height: height / 14,
+    height: height / 16,
     backgroundColor: colors.Orgent,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
+  containerView:{
+    height: 50, 
+    backgroundColor: colors.Orgent,
+    flexDirection:'row'
+  },
+  titlesView:{
+    width:250, 
+    justifyContent:'center', 
+    alignItems:'center',
+
+  },
   TextTitles: {
     fontSize: 25,
-    color: colors.white,
+    color: colors.back,
+    fontWeight:'bold'
   },
   orderRow: {
     height: width / 4,

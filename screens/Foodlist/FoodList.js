@@ -29,9 +29,21 @@ function FoodList( {navigation}) {
     food.filter(eachfood =>
       eachfood.name.toLowerCase().includes(seach.toLowerCase()),
     );
-
+    const createButtonAlert = (item) =>
+  Alert.alert(
+    `Bạn muốn thêm món ' ${item.name} '`,
+    "Ấn Ok để đặt thêm món",
+    [
+      {
+        text: "Cancel",
+        // onPress: () => navigation.goBack(),
+        style: "cancel"
+      },
+      { text: "OK", onPress:()=>navigation.navigate('ProductDetails') }
+    ]
+  );
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{ backgroundColor: 'white'}}>
        <View
         style={styles.ViewButton}>
           <View style={{width:40 }}>
@@ -43,7 +55,12 @@ function FoodList( {navigation}) {
         />
           </TouchableOpacity>
           </View>
-        <TextInput
+       <View style={styles.titleSreach}>
+        <Image 
+        source={icons.search}
+        style={styles.imageSearch}
+        />
+       <TextInput
           autoCorrect={false} // tắt tự động sửa
           onChangeText={text => {
             //nhập tìm kiếm=> lưu gtri và gán vào setSeach
@@ -53,8 +70,10 @@ function FoodList( {navigation}) {
           //onSubmitEditing={()=>{Keyboard.dismiss()}}
           style={styles.InputSearch}
           placeholder="nhập món ăn bạn chọn"
-          placeholderTextColor={colors.black}
+          placeholderTextColor={colors.silver}
+          
         />
+       </View>
          <TouchableOpacity 
          onPress={()=>navigation.navigate('CartScreen')}>
          <Image
@@ -74,7 +93,7 @@ function FoodList( {navigation}) {
           renderItem={({item}) => (
             <FoodItem
               onPress={() => {
-                alert(`Bạn muốn chọn ' ${item.name} '`);
+                createButtonAlert(item)
               }}
               food={item}
             />
@@ -84,12 +103,15 @@ function FoodList( {navigation}) {
       ) : (
         <View
           style={{
-            flex: 1,
+            // flex: 1,
+            height:'100%',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
             <Image 
-
+            style={{height:70,width:70}}
+              source={icons.notification}
+              tintColor={colors.bluesky}
             />
           <Text
             style={styles.Text}>
@@ -112,16 +134,33 @@ const styles=StyleSheet.create({
     marginHorizontal: 10,
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor:colors.Orgent
+    backgroundColor:colors.Orgent,
+    borderRadius:15
+  },
+  titleSreach:{
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems:'center',
+    width:'78%',
+    backgroundColor:colors.white,
+    borderRadius:10
+    
+  },
+  imageSearch:{
+    height:25,
+    width:25,
+    marginLeft:5
   },
   InputSearch:{
-    height: 40,
+    height: 35,
     flex: 1,
     marginEnd: 5,
-    backgroundColor: colors.grey,
+    backgroundColor: colors.white,
     // borderRadius: 7,
-    fontSize: 20,
+    fontSize: 18,
     paddingStart: 10,
+    
+    
   },
   Images:{
     marginHorizontal: 5,
@@ -136,7 +175,7 @@ const styles=StyleSheet.create({
     tintColor:'black'
   },
 Text:{
-  color: 'red',
+  color: colors.bluesky,
   fontSize: 20,
 }
 })

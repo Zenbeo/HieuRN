@@ -76,10 +76,10 @@ export default function Register({navigation}) {
           style={styles.Image}
         />
       </View>
-      <View style={{margin: 20}} />
+      <View style={{margin: 10}} />
       <View
         style={{
-          flex: 30,
+          flex: 25,
         }}>
         <View
           style={{
@@ -159,7 +159,7 @@ export default function Register({navigation}) {
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   ViewBackground: {
-    flex: 20,
+    flex: 13,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
     height: 150,
     width: 150,
     fontWeight: 'bold',
-    // backgroundColor: 'blue',
     alignSelf: 'center',
   },
   TouchLogin: {
@@ -192,7 +191,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.h2,
     color: colors.white,
   },
-
   TextDown: {
     padding: 8,
     fontSize: fontSize.h5,

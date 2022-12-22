@@ -1,94 +1,107 @@
 export const dataFake = [
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+  {
+    id: 1,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M'
-     
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 2,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M'
-     
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 3,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 4,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 5,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 6,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 7,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 8,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 9,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 10,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 11,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 12,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 13,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 14,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-   {
-    name: ' Caffe' ,
-    url :  'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
+    size: ' M',
+  },
+  {
+    id: 15,
+    name: ' Caffe',
+    url: 'https://cafesach.com.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-phong-tranh-cac-benh-ve-rang-mieng-2.jpg',
     price: 30000,
-    size: ' M' 
-   },
-]
+    size: ' M',
+  },
+];

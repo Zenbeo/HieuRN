@@ -2,10 +2,10 @@ import { View, Text,Image,TouchableOpacity } from 'react-native'
 import React from 'react'
 import { icons } from '../constaints'
 
-export default function ButtonBack({onPress}) {
+export default function ButtonBack({onPress,style}) {
    
   return (
-    <View style={{width:40 }}>
+    <View style={style}>
           <TouchableOpacity
           onPress={onPress}>
           <Image

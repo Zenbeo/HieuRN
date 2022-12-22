@@ -1,9 +1,5 @@
 export default {
-  fire: require('../asset/fire.png'),
-  home: require('../asset/home.png'),
-  facebook: require('../asset/facebook1.png'),
-  gmail: require('../asset/gmail.png'),
-  instagram:require('../asset/instagram.png'),
+    home: require('../asset/home.png'),
   menu:require('../asset/list.png'),
   heartDo:require('../asset/heartDo.png'),
   heartDen:require('../asset/heartDen.png'),
@@ -25,5 +21,7 @@ export default {
   shoppimg:require('../asset/shopping.png'),
   back:require('../asset/back.png'),
   search:require('../asset/search.png'),
-  table: require('../asset/table.png')
+  table: require('../asset/table.png'),
+  tableBig: require('../asset/tableBig.png'),
+  close: require('../asset/close.png'),
 };

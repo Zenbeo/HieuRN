@@ -12,6 +12,7 @@ import React from 'react';
 import {colors} from '../../constaints/colors';
 import {dataFake} from '../Constans/mockup';
 import FoodItem from '../Foodlist/FoodItems';
+import { ButtonBack } from '../../Button';
 
 export default function Processing( {navigation}) {
   const createButtonAlert = () =>
@@ -21,16 +22,20 @@ export default function Processing( {navigation}) {
     [
       {
         text: "Cancel",
-        onPress: () => navigation.goBack(),
+        // onPress: () => navigation.goBack(),
         style: "cancel"
       },
-      { text: "OK", onPress: () => navigation.navigate('UITap')}
+      { text: "OK", onPress: () => navigation.navigate('FoodList')}
     ]
   );
   return (
     <View>
       <View style={styles.ViewName}>
-        <Text style={styles.TextName}>Đang tiến hành</Text>
+        <ButtonBack style={{flex:10}}  onPress={()=>navigation.goBack()}/>
+       <View style={{flex:20}}>
+       <Text style={styles.TextName}>Đang tiến hành</Text>
+       </View>
+       
       </View>
       <FlatList
         keyExtractor={index => index.toString()}
@@ -38,9 +43,10 @@ export default function Processing( {navigation}) {
         renderItem={({item}) => {
           return (
             <TouchableOpacity style={styles.orderRow} onPress={createButtonAlert}>
-              <Text> Tên món: {item.name}</Text>
-              <Text> Giá : {item.price}</Text>
-              <Text> Size : {item.size}</Text>
+               <Text> Bàn số: {item.id}</Text>
+              <Text> Thời gian: {item.name}</Text>
+              <Text> Tổng tiền : {item.price}</Text>
+              {/* <Text> Size : {item.size}</Text> */}
             </TouchableOpacity>
           );
         }}
@@ -55,12 +61,15 @@ const styles = StyleSheet.create({
     width: width ,
     backgroundColor: colors.Orgent,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    flexDirection:'row',
+    
   },
   TextName: {
-    color: colors.white,
+    color: colors.black,
     fontSize: 20,
-    fontWeight:'bold'
+    fontWeight:'bold',
+  //  paddingLeft:50
   },
   orderRow: {
     height: width / 4,

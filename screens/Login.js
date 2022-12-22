@@ -16,29 +16,25 @@ import {
 import {images, icons, fontSize} from '../constaints';
 import {colors} from '../constaints/colors';
 // import ContextProvider from '../navigation/Context/ContextProvider';
-import UITap from '../navigation/UITap';
 import {isValidEmail, isValidPassword} from '../utilies/validations';
 import HomeMain from './Home/HomeMain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as yup from 'yup';
 import {Controller, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
+import ContextProvider from '../navigation/Context/ContextProvider';
 
-// const schema = yup.object().shape({
-//   name: yup.string().required(),
-//   password: yup.string().required().min(6, 'it nhat 6 ki tu'),
-// });
 // interface IFormInputs {
-//   name: string;
+//   username: string;
 //   password: string;
 // }
 
 function Login({navigation}) {
   //state
-  const [errorEmail, setErrorEmail] = useState('');
+  const [errorUsername, setErrorUserName] = useState('');
   const [errorPassword, setErrorPassWord] = useState('');
   //state email/pass
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassWord] = useState('');
 
   const [keyboardIsShow, setKeyboardIsShow] = useState(false);
@@ -51,10 +47,10 @@ function Login({navigation}) {
     });
   });
 const UserNameHandler=text => {
-  setErrorEmail(
+  setErrorUserName(
     isValidEmail(text) == true ? '' : 'Tài khoản không đúng',
   );
-  setEmail(text);
+  setUsername(text);
 }
 const PasWordHandler=text => {
   // cập nhật thay đổi thông tin
@@ -65,8 +61,18 @@ const PasWordHandler=text => {
   );
   setPassWord(text);
 }
-  // const user = useContext(ContextProvider);
+  
+const user = useContext(ContextProvider);
 
+const submit = async (item) => {
+  try {
+    await AsyncStorage.setItem('userName', item.name);
+    user.setUser(item);
+  } catch (e) {
+    console.log(e);
+  }
+};
+console.log(user)
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -99,13 +105,11 @@ const PasWordHandler=text => {
             placeholder="Nhập tài khoản của bạn"
             placeholderTextColor={'rgba(0,0,0,0.6)'}
             // value={'hieu@gmail.com'}
-            value={email}
-            // ref='userText'
-            // autoFocus={true}
-            // onEndEditing={(text)=>{this.refs.passwordText.focus()}}//
+            value={username}
+          
           />
           <View style={styles.ViewEmail} />
-          {<Text style={styles.ErrorText}>{errorEmail}</Text>}
+          {<Text style={styles.ErrorText}>{errorUsername}</Text>}
         </View>
         <View
           style={{
@@ -135,6 +139,7 @@ const PasWordHandler=text => {
           }}>
           <TouchableOpacity
             onPress={() => navigation.navigate('HomeMain')}
+            // onPress={() => doUserLogIn()}
             style={styles.TouchLogin}>
             <Text style={styles.TextLogin}>Đăng nhập</Text>
           </TouchableOpacity>
@@ -151,40 +156,8 @@ const PasWordHandler=text => {
         <View></View>
       )}
 
-      {keyboardIsShow == false ? (
-        <View
-          style={{
-            flex: 15,
-          }}>
-          <View
-            style={{
-              // căn dòng kẻ đèn chữ
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginHorizontal: 20,
-            }}>
-            <View
-              style={{
-                flex: 1,
-                height: 1,
-                backgroundColor: 'black',
-              }}
-            />
-            
-            <View
-              style={{
-                flex: 1,
-                height: 1,
-                backgroundColor: 'black',
-              }}
-            />
-          </View>
-        </View>
-      ) : (
-        <View style={{flex: 15}}></View>
-      )}
     </KeyboardAvoidingView>
-  );
+  )
 }
 export default Login;
 const {width, height} = Dimensions.get('window');

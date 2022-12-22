@@ -3,8 +3,8 @@ import React from 'react';
 import {AppRegistry} from 'react-native';
 import {AppScreen, FoodList, History, Login, Processing, } from './screens';
 import {name as appName} from './app.json';
-import HomeMain from './screens/Home/HomeMain';
+import LoadingScreen from './screens/Home/LoadingScreen';
 
 
 AppRegistry.registerComponent(appName, () => () => <AppScreen/>);
-// AppRegistry.registerComponent(appName, () => () => < FoodList/>);
+// AppRegistry.registerComponent(appName, () => () => < LoadingScreen/>);

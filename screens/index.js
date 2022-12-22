@@ -8,6 +8,7 @@ import Processing from './Order/Processing';
 import HomeMain from './Home/HomeMain';
 import Table from './Table/Table';
 import Register from './Register/Register';
+import LoadingScreen from './Home/LoadingScreen';
 export {
   MainScreen,
   Login,
@@ -18,5 +19,6 @@ export {
   Processing,
   HomeMain,
   Table,
-  Register
+  Register,
+  LoadingScreen
 };

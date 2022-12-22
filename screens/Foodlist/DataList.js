@@ -13,19 +13,19 @@ export const DataFList = [
         size: 'M , L '
       },
       {
-        name: 'bạc xỉu',
+        name: 'Bạc xỉu',
         url: 'https://cdn.tgdd.vn/2021/03/content/13-800x549.jpg',    
         price: 25000,
         size: 'M , L '
       },
       {
-        name: 'caffe cốt dừa',
+        name: 'Caffe cốt dừa',
         url: 'https://img.meta.com.vn/Data/image/2018/12/06/tu-pha-che-ca-phe-cot-dua-cuc-thom-ngon-va-hap-dan-ngay-tai-nha-nd0.jpg',
         price: 55000,
         size: 'M , L '
       },
       {
-        name: 'sữa chua đánh đá cafe',
+        name: 'Sữa chua đánh đá cafe',
         url: 'https://dungcuphache.com/wp-content/uploads/2022/01/thanh-pham-ly-sua-chua-danh-da-ca-phe.jpg', 
         price: 35000,
         size: 'M , L '
