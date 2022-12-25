@@ -13,90 +13,40 @@ import {
   Platform,
   Keyboard,
   Dimensions,
+  StyleSheet,
 } from 'react-native';
 import {colors} from '../../constaints/colors';
 
-function _getColorFromStatus(status) {
-  //dau gach duoi hien thi chi dùng ham status thoi
-  //   //C1
-  //     if(status.toLowerCase().trim()=='opening soon'){
-  //     return colors.sucses}
-  //   else if (status.toLowerCase().trim()=='closeing soon'){
-  //     return colors.alert}
-  //     else if (status.toLowerCase().trim()=='coming soon'){
-  //         return colors.warning}
-  //     return colors.sucses
-  //C2
-  return status.toLowerCase().trim() == 'Còn hàng'
-    ? colors.sucses
-    : status.toLowerCase().trim() == 'Hết hàng'
-    ? colors.alert
-    : colors.sucses;
-}
 function FoodItem(props) {
   let {name, url, price, size} = props.food;
   const {onPress} = props;
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={{
-        height: 200,
-        marginTop: 10,
-        marginBottom: -50,
-        paddingStart: 10,
-        flexDirection: 'row',
-        //đổ  bóng
-        elevation: 4,
-        shadowColor: 'black',
-        shadowRadius: 8,
-        shadowOpacity: 0.5,
-        shadowOffset: {width: 0, height: 4},
-      }}>
+      style={styles.buttonFood}>
       <Image
-        style={{
-          height: 100,
-          width: 100,
-          resizeMode: 'cover',
-          borderRadius: 10,
-          marginRight: 15,
-        }}
+        style={styles.imageFood}
         source={{
           uri: url,
         }}
       />
       <View
-        style={{
-          flex: 1,
-          marginRight: 10,
-        }}>
+        style={styles.viewText}>
         <Text
-          style={{
-            color: 'black',
-            fontSize: fontSize.h4,
-            fontWeight: 'bold',
-          }}>
+          style={styles.nameText}>
           {name}
         </Text>
         <View
-          style={{
-            height: 1,
-            backgroundColor: 'black',
-          }}
+          style={styles.line}
         />
 
         <Text
-          style={{
-            color: colors.inactive,
-            fontSize: fontSize.h4,
-          }}>
+          style={styles.cost}>
           Price: {price}
         </Text>
 
         <Text
-          style={{
-            color: colors.inactive,
-            fontSize: fontSize.h4,
-          }}>
+          style={styles.size}>
           Size : {size}
         </Text>
       </View>
@@ -104,3 +54,46 @@ function FoodItem(props) {
   );
 }
 export default FoodItem;
+const styles=StyleSheet.create({
+  buttonFood:{
+    height: 200,
+    marginTop: 10,
+    marginBottom: -50,
+    paddingStart: 10,
+    flexDirection: 'row',
+    //đổ  bóng
+    elevation: 4,
+    shadowColor: 'black',
+    shadowRadius: 8,
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 4},
+  },
+  imageFood:{
+    height: 100,
+    width: 100,
+    resizeMode: 'cover',
+    borderRadius: 10,
+    marginRight: 15,
+  },
+  viewText:{
+    flex: 1,
+    marginRight: 10,
+  },
+  nameText:{
+    color: 'black',
+    fontSize: fontSize.h4,
+    fontWeight: 'bold',
+  },
+  line:{
+    height: 1,
+    backgroundColor: 'black',
+  },
+cost:{
+  color: colors.inactive,
+  fontSize: fontSize.h4,
+},
+size:{
+  color: colors.inactive,
+  fontSize: fontSize.h4,
+}
+})

@@ -7,22 +7,22 @@ import {
   Pressable,
   TextInput,
   Keyboard,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Alert
 } from 'react-native';
 import React, {useState,useEffect} from 'react';
 import {colors} from '../../constaints/colors';
-import {icons, images} from '../../constaints';
-import {color} from 'react-native-reanimated';
+import {icons} from '../../constaints';
 
 export default function ProductDetails({navigation, props}) {
   const [count, setCount] = useState(0);
+  const [check, setCheck] = useState(false);
   function increment() {
     //setCount(prevCount => prevCount+=1);
     setCount(function (prevCount) {
       return (prevCount += 1);
     });
   }
-
   function decrement() {
     setCount(function (prevCount) {
       if (prevCount > 0) {
@@ -41,8 +41,14 @@ export default function ProductDetails({navigation, props}) {
       setKeyboardIsShow(false);
     });
   });
-  const [check, setCheck]= useState()
-  
+  const createButtonAlert = (item) =>
+  Alert.alert(
+   'Thêm món thành công',
+    "",
+    [
+      { text: "OK",  onPress:()=>navigation.goBack()  }
+    ]
+  );
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -51,22 +57,34 @@ export default function ProductDetails({navigation, props}) {
         backgroundColor: colors.Orgent,
       }}>
       <View style={styles.title}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity  onPress={()=>navigation.goBack()}>
+          
           <Image source={icons.close} style={styles.closebutton} />
         </TouchableOpacity>
-        <Image style={styles.images} source={images.computers} />
+
+        <Image style={styles.images} source={{uri: 'https://www.highlandscoffee.com.vn/vnt_upload/product/05_2018/CFD.png'}} />
       </View>
       <View style={styles.titleProduct}>
-        <Text>Tên món</Text>
+      <View style={styles.titleNameCost}>
+      <Text style={{fontSize:18, fontWeight:'bold',color:colors.silver}}>Phin đen đá</Text>
+      <Text style={{fontSize:16, fontWeight:'bold',color:colors.silver}}>25.000</Text>
+
+      </View>
         <View style={styles.containerSize}>
-          <TouchableOpacity style={styles.buttonSize}>
-            <Text style={styles.textSize}>M</Text>
+          <TouchableOpacity
+          onPress={() => {
+            setCheck(false)
+          }}
+           style={[styles.buttonSize, {backgroundColor: check ? colors.grey  : colors.Orgent,}]}>
+            <Text style={styles.textSize}>M</Text>  
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonSize}>
+          <TouchableOpacity onPress={() => {
+            setCheck(true)
+          }} style={[styles.buttonSize, {backgroundColor: check ? colors.Orgent  : colors.grey,}]}>
             <Text style={styles.textSize }>L</Text>
           </TouchableOpacity>
         </View>
-        <Text>Ghi chú món: </Text>
+        <Text style={styles.noteText}>Ghi chú món: </Text>
         <TextInput 
         style={styles.inputNote}
         placeholder=' Ghi chú ...'
@@ -88,7 +106,7 @@ export default function ProductDetails({navigation, props}) {
           </TouchableOpacity>
         </View>
 
-        <Pressable style={styles.buttonClick} android_ripple={{color: '#EEEE'}}>
+        <Pressable style={styles.buttonClick} android_ripple={{color: '#EEEE'}} onPress={createButtonAlert}>
           <Text style={styles.textButton}>Thêm vào giỏ</Text>
         </Pressable>
       </View>
@@ -107,13 +125,17 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
   },
+  titleNameCost:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    paddingRight:5
+  },
   images: {
-    height: 300,
-    width: 300,
+    height: 400,
+    width: 400,
     resizeMode: 'cover',
-    borderRadius: 10,
-    marginRight: 15,
-    alignSelf: 'center',
+   marginLeft:-40
+  
   },
   closebutton: {
     height: 30,
@@ -121,6 +143,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   titleProduct: {
+  
     backgroundColor: colors.white,
     flex: 1,
     borderTopLeftRadius: 20,
@@ -132,13 +155,22 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   buttonSize: {
-    height: 40,
-    width: 50,
-    backgroundColor: colors.Orgent,
-    margin: 10,
+    height: 50,
+    width: 60,
+    margin: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius:8
+    borderRadius:8,
+     //đổ  bóng
+     elevation: 1,
+    //  shadowColor: 'black',
+     shadowRadius: 4,
+     shadowOpacity: 0.25,
+     shadowOffset: {width: 0, height: 2},
+  },
+  noteText:{
+    fontSize:16,
+    paddingLeft:5
   },
   custombutton:{
     backgroundColor:colors.grey
@@ -150,8 +182,7 @@ const styles = StyleSheet.create({
   inputNote:{
     borderWidth:1,
     borderRadius:8,
-    
-    
+  
   },
   buttonContainer: {
     height: 150,
@@ -177,7 +208,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.Orgent,
   },
   decrement: {
-    backgroundColor: colors.silver,
+    backgroundColor: colors.grey,
   },
   textCount: {
     fontSize: 20,

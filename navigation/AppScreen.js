@@ -12,7 +12,7 @@ import ProductDetails from '../screens/Foodlist/ProductDetails';
 const Stack = createNativeStackNavigator();
 
 export default function AppScreen() {
-  // const user = React.useContext(ContextProvider);
+  const user = React.useContext(ContextProvider);
 
   // React.useEffect(() => {
   //   AsyncStorage.getItem('userName')

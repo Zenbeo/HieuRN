@@ -6,7 +6,7 @@ export const UserContext = createContext({
     name: '',
     password: '',
   },
-  setUser: () => {},
+  setUser: (item) => { },
 });
 export default function ContextProvider({children}) {
   const [user, setUser] = useState({

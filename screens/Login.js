@@ -19,16 +19,9 @@ import {colors} from '../constaints/colors';
 import {isValidEmail, isValidPassword} from '../utilies/validations';
 import HomeMain from './Home/HomeMain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as yup from 'yup';
-import {Controller, useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
 import ContextProvider from '../navigation/Context/ContextProvider';
-
-// interface IFormInputs {
-//   username: string;
-//   password: string;
-// }
-
+import axios from 'axios';
+import {LinearGradient} from 'react-native-linear-gradient';
 function Login({navigation}) {
   //state
   const [errorUsername, setErrorUserName] = useState('');
@@ -45,34 +38,50 @@ function Login({navigation}) {
     Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardIsShow(false);
     });
-  });
-const UserNameHandler=text => {
-  setErrorUserName(
-    isValidEmail(text) == true ? '' : 'Tài khoản không đúng',
-  );
-  setUsername(text);
-}
-const PasWordHandler=text => {
-  // cập nhật thay đổi thông tin
-  setErrorPassWord(
-    isValidPassword(text) == true
-      ? ''
-      : 'Mật khẩu phải trên 3 kí tự',
-  );
-  setPassWord(text);
-}
-  
-const user = useContext(ContextProvider);
+  },[ ]);
+  const UserNameHandler = text => {
+    setErrorUserName(isValidEmail(text) == true ? '' : 'Tài khoản không đúng');
+    setUsername(text);
+  };
+  const PasWordHandler = text => {
+    // cập nhật thay đổi thông tin
+    setErrorPassWord(
+      isValidPassword(text) == true ? '' : 'Mật khẩu phải trên 3 kí tự',
+    );
+    setPassWord(text);
+  };
 
-const submit = async (item) => {
-  try {
-    await AsyncStorage.setItem('userName', item.name);
-    user.setUser(item);
-  } catch (e) {
-    console.log(e);
+  // const user = useContext(ContextProvider);
+
+  //call api 
+  const getData = async() => {
+    axios({
+      url: 'https://63a55fab2a73744b008c2b33.mockapi.io/product',
+      timeout:10000,
+      method: 'GET',
+      data:{
+        username: username ,
+        password: password ,
+      },
+    }).then(result =>{
+      const currentUser=result.data
+      console.log( result.data)
+      // save information storage
+      AsyncStorage.setItem('UserName', currentUser.username)
+      AsyncStorage.setItem('password', currentUser.password)
+      // AsyncStorage.setItem('token', res.data)
+      AsyncStorage.setItem('id', currentUser.id)
+      
+      // navigation.navigate('HomeMain')
+    }).catch(error=>{
+  
+    })
   }
-};
-console.log(user)
+
+  const submit = ( ) => {
+    getData()
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -82,7 +91,10 @@ console.log(user)
         backgroundColor: 'white',
       }}>
       <View style={styles.ViewBackground}>
-        {/* <Text style={styles.TextBackground}>ĐẶT ĐỒ UỐNG </Text> */}
+        <View style={{flexDirection:'column'}}>
+        <Text style={styles.TextTitle}>Hello </Text>
+        <Text style={styles.TextTitle}>Coffee Family </Text>
+        </View>
         <Image
           tintColor="blue" //màu icons
           source={images.computers}
@@ -104,9 +116,7 @@ console.log(user)
             style={styles.userText}
             placeholder="Nhập tài khoản của bạn"
             placeholderTextColor={'rgba(0,0,0,0.6)'}
-            // value={'hieu@gmail.com'}
             value={username}
-          
           />
           <View style={styles.ViewEmail} />
           {<Text style={styles.ErrorText}>{errorUsername}</Text>}
@@ -134,15 +144,18 @@ console.log(user)
       {keyboardIsShow == false ? (
         <View //nếu bàn phím ko hiện thì nút Login hiện
           style={{
-            flex: 20,
+            flex: 25,
             // marginTop:35
           }}>
+            {/* <LinearGradient colors={['#4c669f', '#192f6a']} style={styles.linearGradient}> */}
           <TouchableOpacity
             onPress={() => navigation.navigate('HomeMain')}
-            // onPress={() => doUserLogIn()}
-            style={styles.TouchLogin}>
+            // onPress={submit}
+            style={styles.TouchLogin}
+            >
             <Text style={styles.TextLogin}>Đăng nhập</Text>
           </TouchableOpacity>
+          {/* </LinearGradient> */}
           <View style={styles.ViewDki}>
             <Text
               style={styles.TextDki}
@@ -155,9 +168,8 @@ console.log(user)
       ) : (
         <View></View>
       )}
-
     </KeyboardAvoidingView>
-  )
+  );
 }
 export default Login;
 const {width, height} = Dimensions.get('window');
@@ -171,9 +183,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
-  TextBackground: {
+
+  TextTitle: {
     fontSize: 30,
     color: 'blue',
+   paddingLeft:15,
+   fontWeight:'bold'
   },
   Image: {
     height: 150,
@@ -181,7 +196,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // backgroundColor: 'blue',
     alignSelf: 'center',
+    marginRight:15
   },
+  // linearGradient: {
+  //   flex: 1,
+  //   paddingLeft: 15,
+  //   paddingRight: 15,
+  //   borderRadius: 5
+  // },
   TouchLogin: {
     justifyContent: 'center',
     alignItems: 'center',

@@ -36,10 +36,11 @@ function FoodList( {navigation}) {
     [
       {
         text: "Cancel",
-        // onPress: () => navigation.goBack(),
+      
         style: "cancel"
       },
-      { text: "OK", onPress:()=>navigation.navigate('ProductDetails') }
+      { text: "OK", 
+      onPress:()=>navigation.navigate('ProductDetails') }
     ]
   );
   return (
@@ -66,12 +67,9 @@ function FoodList( {navigation}) {
             //nhập tìm kiếm=> lưu gtri và gán vào setSeach
             setSeach(text);
           }}
-          //blurOnSubmit={true}//ẩn bàn phím khi ko muons ấn
-          //onSubmitEditing={()=>{Keyboard.dismiss()}}
           style={styles.InputSearch}
           placeholder="nhập món ăn bạn chọn"
-          placeholderTextColor={colors.silver}
-          
+          // placeholderTextColor={colors.grey}       
         />
        </View>
          <TouchableOpacity 
@@ -102,16 +100,11 @@ function FoodList( {navigation}) {
         />
       ) : (
         <View
-          style={{
-            // flex: 1,
-            height:'100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          style={styles.searchErrorView}>
             <Image 
             style={{height:70,width:70}}
               source={icons.notification}
-              tintColor={colors.bluesky}
+              tintColor={colors.Orgent}
             />
           <Text
             style={styles.Text}>
@@ -135,7 +128,8 @@ const styles=StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor:colors.Orgent,
-    borderRadius:15
+    borderRadius:15,
+    height:45
   },
   titleSreach:{
     flexDirection:'row',
@@ -143,24 +137,23 @@ const styles=StyleSheet.create({
     alignItems:'center',
     width:'78%',
     backgroundColor:colors.white,
-    borderRadius:10
+    borderRadius:10,
+    // height:40
     
   },
   imageSearch:{
-    height:25,
+    maxHeight:25,
     width:25,
     marginLeft:5
   },
   InputSearch:{
-    height: 35,
+    maxHeight:40,
     flex: 1,
     marginEnd: 5,
     backgroundColor: colors.white,
-    // borderRadius: 7,
-    fontSize: 18,
-    paddingStart: 10,
-    
-    
+    fontSize: 16,
+    // paddingStart: 10,
+
   },
   Images:{
     marginHorizontal: 5,
@@ -170,12 +163,17 @@ const styles=StyleSheet.create({
   },
   IconsBack:{
     marginHorizontal: 5,
-    height: 30,
+    height: 35,
     width: 30,
     tintColor:'black'
   },
 Text:{
-  color: colors.bluesky,
+  color: colors.Orgent,
   fontSize: 20,
+},
+searchErrorView:{
+  height:'100%',
+justifyContent:'center',
+alignItems:'center'
 }
 })
