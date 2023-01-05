@@ -12,13 +12,15 @@ import {
   StyleSheet,
   Dimensions,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {fontSize, images} from '../../constaints';
 import {colors} from '../../constaints/colors';
-
+import { connect } from 'react-redux';
 import {isValidEmail, isValidPassword} from '../../utilies/validations';
+import { register } from '../../redux/actions/authActions';
 
-export default function Register({navigation}) {
+ function Register({navigation, register, state}) {
   //state
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassWord] = useState('');
@@ -55,11 +57,23 @@ export default function Register({navigation}) {
     );
     setCheckPassWord(text);
   };
-  // const user = useContext(ContextProvider);
-  const NotifineHandler = () =>
-    Alert.alert('Bạn đăng kí thành công ', 'Mời bạn đăng nhập', [
-      {text: 'OK', onPress: () => navigation.navigate('Login')},
-    ]);
+ 
+  const [isLoading,setIsLoading]=useState( false)
+  const NotifineHandler = async () => {
+    
+// const {email,password} = state
+      try {
+        setIsLoading({...state, isLoading: true});
+        await register(username, password); //trờ kq của login
+        setIsLoading({...state, isLoading: false});
+        Alert.alert('Bạn đăng kí thành công ', 'Mời bạn đăng nhập', [
+          {text: 'OK', onPress: () => navigation.navigate('Login')},
+        ]);
+      } catch (error) {
+        setIsLoading({...state, isLoading: false, error: 'Error '});
+      }
+    };
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -138,6 +152,7 @@ export default function Register({navigation}) {
           style={{
             flex: 15,
           }}>
+            {isLoading? <ActivityIndicator size='large' color='blue' /> : <>
           <TouchableOpacity onPress={NotifineHandler} style={styles.TouchLogin}>
             <Text style={styles.TextLogin}>Đăng ký</Text>
           </TouchableOpacity>
@@ -149,6 +164,7 @@ export default function Register({navigation}) {
             </Text>
             <View style={{borderWidth: 0.2, width: 60}} />
           </View>
+          </>}
         </View>
       ) : (
         <View></View>
@@ -156,6 +172,14 @@ export default function Register({navigation}) {
     </KeyboardAvoidingView>
   );
 }
+const mapStateToProps = (state) => ({})
+
+const mapDispatchToProps =(dispatch)=>( {
+  register: (username, password)=>dispatch(register(username,password))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register)
+
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   ViewBackground: {

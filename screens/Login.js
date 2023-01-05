@@ -11,6 +11,7 @@ import {
   Keyboard,
   StyleSheet,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 
 import {images, icons, fontSize} from '../constaints';
@@ -18,17 +19,21 @@ import {colors} from '../constaints/colors';
 // import ContextProvider from '../navigation/Context/ContextProvider';
 import {isValidEmail, isValidPassword} from '../utilies/validations';
 import HomeMain from './Home/HomeMain';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import ContextProvider from '../navigation/Context/ContextProvider';
 import axios from 'axios';
-import {LinearGradient} from 'react-native-linear-gradient';
-function Login({navigation}) {
+import {connect} from 'react-redux';
+import {sub} from 'react-native-reanimated';
+import {login} from '../redux/actions/authActions';
+
+function Login({navigation, login, loginedEmail, state}) {
   //state
   const [errorUsername, setErrorUserName] = useState('');
   const [errorPassword, setErrorPassWord] = useState('');
   //state email/pass
   const [username, setUsername] = useState('');
   const [password, setPassWord] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const [keyboardIsShow, setKeyboardIsShow] = useState(false);
   useEffect(() => {
@@ -38,7 +43,7 @@ function Login({navigation}) {
     Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardIsShow(false);
     });
-  },[ ]);
+  }, []);
   const UserNameHandler = text => {
     setErrorUserName(isValidEmail(text) == true ? '' : 'Tài khoản không đúng');
     setUsername(text);
@@ -51,36 +56,48 @@ function Login({navigation}) {
     setPassWord(text);
   };
 
-  // const user = useContext(ContextProvider);
-
-  //call api 
-  const getData = async() => {
+  //call api
+  const getData = async () => {
     axios({
       url: 'https://63a55fab2a73744b008c2b33.mockapi.io/product',
-      timeout:10000,
+      timeout: 10000,
       method: 'GET',
-      data:{
-        username: username ,
-        password: password ,
+      data: {
+        username: username,
+        password: password,
       },
-    }).then(result =>{
-      const currentUser=result.data
-      console.log( result.data)
-      // save information storage
-      AsyncStorage.setItem('UserName', currentUser.username)
-      AsyncStorage.setItem('password', currentUser.password)
-      // AsyncStorage.setItem('token', res.data)
-      AsyncStorage.setItem('id', currentUser.id)
-      
-      // navigation.navigate('HomeMain')
-    }).catch(error=>{
-  
+      contentType: ' application/json; charset=utf-8',
     })
-  }
+      .then(result => {
+        const currentUser = result.data;
+        console.log(result.data);
 
-  const submit = ( ) => {
-    getData()
-  }
+        // navigation.navigate('HomeMain')
+      })
+      .catch(error => {});
+  };
+
+  const submit = async () => {
+    // const {username,password} = state
+    try {
+      setIsLoading({...state, isLoading: true});
+      await login(username, password); //trờ kq của login
+
+      if (loginedEmail) {
+        setIsLoading({...state, isLoading: false});
+        navigation.navigate('HomeMain');
+        console.log(state);
+        return;
+      }
+      setIsLoading({
+        ...state,
+        isLoading: false,
+        error: ' sai username or password',
+      });
+    } catch (error) {
+      setIsLoading({...state, isLoading: false, error: 'Error '});
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -91,9 +108,9 @@ function Login({navigation}) {
         backgroundColor: 'white',
       }}>
       <View style={styles.ViewBackground}>
-        <View style={{flexDirection:'column'}}>
-        <Text style={styles.TextTitle}>Hello </Text>
-        <Text style={styles.TextTitle}>Coffee Family </Text>
+        <View style={{flexDirection: 'column'}}>
+          <Text style={styles.TextTitle}>Hello </Text>
+          <Text style={styles.TextTitle}>Coffee Family </Text>
         </View>
         <Image
           tintColor="blue" //màu icons
@@ -147,23 +164,27 @@ function Login({navigation}) {
             flex: 25,
             // marginTop:35
           }}>
-            {/* <LinearGradient colors={['#4c669f', '#192f6a']} style={styles.linearGradient}> */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate('HomeMain')}
-            // onPress={submit}
-            style={styles.TouchLogin}
-            >
-            <Text style={styles.TextLogin}>Đăng nhập</Text>
-          </TouchableOpacity>
-          {/* </LinearGradient> */}
-          <View style={styles.ViewDki}>
-            <Text
-              style={styles.TextDki}
-              onPress={() => navigation.navigate('Register')}>
-              Đăng kí
-            </Text>
-            <View style={{borderWidth: 0.2, width: 80}} />
-          </View>
+          {isLoading ? (
+            <ActivityIndicator size="large" color=" blue" />
+          ) : (
+            <>
+              <TouchableOpacity
+                onPress={submit}
+                // onPress={submit}
+                style={styles.TouchLogin}>
+                <Text style={styles.TextLogin}>Đăng nhập</Text>
+              </TouchableOpacity>
+
+              <View style={styles.ViewDki}>
+                <Text
+                  style={styles.TextDki}
+                  onPress={() => navigation.navigate('Register')}>
+                  Đăng kí
+                </Text>
+                <View style={{borderWidth: 0.2, width: 80}} />
+              </View>
+            </>
+          )}
         </View>
       ) : (
         <View></View>
@@ -171,7 +192,18 @@ function Login({navigation}) {
     </KeyboardAvoidingView>
   );
 }
-export default Login;
+
+//rfcredux
+const mapStateToProps = state => ({
+  loginedEmail: state.auths.loginedEmail,
+});
+
+const mapDispatchToProps = dispatch => ({
+  login: async (username, password) => dispatch(login(username, password)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   ViewBackground: {
@@ -187,8 +219,8 @@ const styles = StyleSheet.create({
   TextTitle: {
     fontSize: 30,
     color: 'blue',
-   paddingLeft:15,
-   fontWeight:'bold'
+    paddingLeft: 15,
+    fontWeight: 'bold',
   },
   Image: {
     height: 150,
@@ -196,7 +228,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // backgroundColor: 'blue',
     alignSelf: 'center',
-    marginRight:15
+    marginRight: 15,
   },
   // linearGradient: {
   //   flex: 1,

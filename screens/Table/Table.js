@@ -15,12 +15,15 @@ import {color} from 'react-native-reanimated';
 import {ButtonBack} from '../../Button';
 import {images, icons, fontSize} from '../../constaints';
 import {colors} from '../../constaints/colors';
-import {dataItem} from './TableItem';
+// import {dataItem} from './TableItem';
 //import colors from '../../constaints/col
+import axios from 'axios';
+import { string } from 'yup';
 
 function Table({navigation}) {
   const [check, setCheck] = useState(false);
-  const [product, setProduct] = useState(dataItem);
+  // const [product, setProduct] = useState(dataItem);
+  const [data, setData] = useState();
   
   //check table On/off
   const [selected, setSelected] = useState('');
@@ -36,6 +39,34 @@ function Table({navigation}) {
     toggleSelectedID(item.id)
     // navigation.navigate('FoodList')
   }
+  useEffect(()=>{
+    getDesk()
+  }, [])
+
+  const getDesk = async () => {
+    axios({
+      url: 'http://192.168.100.8/get-desk?id=&name=&status=&type=',
+      // url: 'http://192.168.100.8/get-product?id=&name=&category=',
+      timeout: 10000,
+      method: 'GET',
+      contentType: ' application/json; charset=utf-8',
+    })
+      .then(result => {
+        setData(result.data)
+        console.log(result);
+        let responseData = result.data;
+        responseData.forEach(item  => {
+          console.log(item);
+          console.log(item.id);
+          console.log(item.name);
+        });
+        // navigation.navigate('HomeMain')
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  if(!data) return null //check data
   return (
     <View style={{backgroundColor: 'white',flex:1}}>
       <View style={styles.containerTitle}>
@@ -58,18 +89,18 @@ function Table({navigation}) {
       </View>
       {/* {fillteredTable().length ? ( */}
       <FlatList
-        data={product}
+        data={data}
         keyExtractor={index => index.toString()}
         numColumns={2} //chia đôi man
         renderItem={({item, index}) => (
           <Pressable
            style={styles.container}
             android_ripple={{color: '#ccc'}}
-            onPress={() => navigation.navigate('FoodList')}
-            // onPress={ChooseHandler}
+            // onPress={() => navigation.navigate('FoodList')}
+            onPress={()=>navigation.navigate('FoodList')}
             >
             <Text style={styles.nameTable}>{item.name}</Text>
-            <Image source={item.url} style={styles.imageTable} />
+            <Image source={icons.table} style={styles.imageTable} />
           </Pressable>
         )}
       />

@@ -57,7 +57,7 @@ export default function ProductDetails({navigation, props}) {
         backgroundColor: colors.Orgent,
       }}>
       <View style={styles.title}>
-        <TouchableOpacity  onPress={()=>navigation.goBack()}>
+        <TouchableOpacity  onPress={()=>navigation.navigate('CartScreen')}>
           
           <Image source={icons.close} style={styles.closebutton} />
         </TouchableOpacity>
