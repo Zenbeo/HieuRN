@@ -43,7 +43,9 @@ export default function HomeMain({navigation}) {
       <View style={styles.ViewButtonBack}>
         <TouchableOpacity
           style={styles.ButtonBack}
-          onPress={() => navigation.navigate('Login')}>
+          onPress={() => navigation.navigate('Login',{
+            // isNull: true
+          })}>
           <Text style={styles.TextButton}>Đăng xuất</Text>
         </TouchableOpacity>
       </View>

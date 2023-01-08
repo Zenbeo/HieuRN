@@ -10,19 +10,17 @@ import {
   FlatList,
   StyleSheet,
   TextInput,
+  LogBox,
 } from 'react-native';
 import {color} from 'react-native-reanimated';
 import {ButtonBack} from '../../Button';
 import {images, icons, fontSize} from '../../constaints';
 import {colors} from '../../constaints/colors';
-// import {dataItem} from './TableItem';
-//import colors from '../../constaints/col
 import axios from 'axios';
-import { string } from 'yup';
+import { hasLocal } from '../localhost';
 
-function Table({navigation}) {
+function Table({navigation,route}) {
   const [check, setCheck] = useState(false);
-  // const [product, setProduct] = useState(dataItem);
   const [data, setData] = useState();
   
   //check table On/off
@@ -37,15 +35,15 @@ function Table({navigation}) {
   };
   const ChooseHandler=({item})=>{
     toggleSelectedID(item.id)
-    // navigation.navigate('FoodList')
   }
   useEffect(()=>{
+    console.log("LOG HAS DESK " + route?.params?.hasDesk);
+    LogBox.ignoreAllLogs()
     getDesk()
   }, [])
-
   const getDesk = async () => {
     axios({
-      url: 'http://192.168.100.8/get-desk?id=&name=&status=&type=',
+      url: `http://${hasLocal}/get-desk?id=&name=&status=&type=`,
       // url: 'http://192.168.100.8/get-product?id=&name=&category=',
       timeout: 10000,
       method: 'GET',
@@ -57,10 +55,7 @@ function Table({navigation}) {
         let responseData = result.data;
         responseData.forEach(item  => {
           console.log(item);
-          console.log(item.id);
-          console.log(item.name);
-        });
-        // navigation.navigate('HomeMain')
+        })
       })
       .catch(error => {
         console.log(error);
@@ -94,10 +89,12 @@ function Table({navigation}) {
         numColumns={2} //chia đôi man
         renderItem={({item, index}) => (
           <Pressable
-           style={styles.container}
+           style={[styles.container]}
             android_ripple={{color: '#ccc'}}
-            // onPress={() => navigation.navigate('FoodList')}
-            onPress={()=>navigation.navigate('FoodList')}
+            onPress={()=>navigation.navigate('FoodList',{
+              id:item.id,
+              // status: item.status
+            })}
             >
             <Text style={styles.nameTable}>{item.name}</Text>
             <Image source={icons.table} style={styles.imageTable} />

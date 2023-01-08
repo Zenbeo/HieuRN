@@ -11,66 +11,51 @@ import {
   Alert,
   ScrollView,
   FlatList,
+  LogBox,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {colors} from '../../constaints/colors';
 import {icons, images} from '../../constaints';
 import buttonCount from '../../Button/buttonCount';
+import {hasLocal} from '../localhost';
+import RenderItemCart from './RenderItemCart';
 
-export default function CartScreen({navigation}) {
+export default function CartScreen({navigation, route}) {
   const [listProduct, setListProduct] = useState();
-  const createButtonAlert = item =>
-    Alert.alert('Thêm món thành công', '', [{text: 'OK'}]);
+  const [status, setStatus] = useState(route?.params?.status)
+  const createButtonAlert = () =>{
+    setStatus(!status)
+    navigation.navigate('Table',{
+      hasDesk: status
+    })
+  }
 
-    const [count1, setCount1] = useState(0);
-    const [count2, setCount2] = useState(0);
-    const [count3, setCount3] = useState(0);
 
-    function increment1() {
-      //setCount(prevCount => prevCount+=1);
-      setCount1(function (prevCount) {
-        return (prevCount += 1);
+
+  const deskID = route?.params?.deskID;
+  const [listItem, setListItem] = React.useState([]);
+const [newData, setNewData] = useState([])
+
+const [loading, setLoading] = useState(false);
+  React.useEffect(() => {
+    LogBox.ignoreAllLogs()
+    setLoading(true);
+    fetchData();
+    setLoading(false);
+  }, []);
+
+  const fetchData = React.useCallback(async () => {
+    setLoading(true);
+    const data = `http://${hasLocal}/get-all-orders`;
+    fetch(data)
+      .then(response => response.json())
+      .then(data => {
+        const getIDDesk = data.filter((IdDesk) => IdDesk.deskId == deskID)
+        setListItem([...getIDDesk]);
+        setLoading(false);
       });
-    }
-    function decrement1() {
-      setCount1(function (prevCount) {
-        if (prevCount > 0) {
-          return (prevCount -= 1);
-        } else {
-          return (prevCount = 0);
-        }
-      });
-    }
-    function increment2() {
-      //setCount(prevCount => prevCount+=1);
-      setCount2(function (prevCount) {
-        return (prevCount += 1);
-      });
-    }
-    function decrement2() {
-      setCount2(function (prevCount) {
-        if (prevCount > 0) {
-          return (prevCount -= 1);
-        } else {
-          return (prevCount = 0);
-        }
-      });
-    }
-    function increment3() {
-      //setCount(prevCount => prevCount+=1);
-      setCount3(function (prevCount) {
-        return (prevCount += 1);
-      });
-    }
-    function decrement3() {
-      setCount3(function (prevCount) {
-        if (prevCount > 0) {
-          return (prevCount -= 1);
-        } else {
-          return (prevCount = 0);
-        }
-      });
-    }
+  }, [!loading]);
+
   return (
     <View
       // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -79,153 +64,66 @@ export default function CartScreen({navigation}) {
         backgroundColor: colors.Orgent,
       }}>
       <View style={styles.title}>
-       <View style={{flexDirection:'row',alignItems:'center'}}>
-       <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={icons.back} style={styles.closebutton} />
-        </TouchableOpacity>
-        <Text style={styles.textTitle}>Giỏ hàng</Text>
-       </View>
-        <View style={{ paddingRight:10}}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={icons.back} style={styles.closebutton} />
+          </TouchableOpacity>
+          <Text style={styles.textTitle}>Giỏ hàng</Text>
+        </View>
+        <View style={{paddingRight: 10}}>
           <TouchableOpacity>
-      <Text style={{fontSize:15,
-      color:colors.bluesky,}}> Xóa giỏ hàng</Text>
+            <Text style={{fontSize: 15, color: colors.bluesky}}>
+              {' '}
+              Xóa giỏ hàng
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.titleProduct}>
         <View style={{flex: 1}}>
-          <View>
-            <View
-              style={styles.containCart}>
-              <Text style={{fontSize:20,color:colors.back,fontWeight:'bold',marginBottom:10}}> Đơn hàng</Text>
-              <TouchableOpacity onPress={()=>navigation.goBack()}>
-                  <Text style={styles.nameButton} > Thêm món</Text>
-                  </TouchableOpacity>
-            </View>
-            <View >
-              <Text style={styles.nameCart}>
-                Bàn số : 2
+ 
+            <View style={styles.containCart}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: colors.back,
+                  fontWeight: 'bold',
+                  marginBottom: 10,
+                }}>
+                {' '}
+                Đơn hàng
               </Text>
-              <View style={{ borderWidth:0.2,marginBottom:10}}/>
-              <ScrollView >
-                <View style={{marginBottom:20}}>
-               
-                  <Text> x {count1} </Text>
-                <View
-                  style={styles.containCart}>
-                  <Text style={styles.nameCart}>
-                    Phin nâu đá
-                  </Text>
-                  <Text style={styles.nameCart}>
-                    25.000
-                  </Text>
-                </View>
-               <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-             <View>
-             <Text style={styles.nameSize}>
-                    Size : M
-                  </Text>
-                  <TouchableOpacity onPress={()=>navigation.navigate('ProductDetails')}>
-                  <Text style={styles.nameButton} > Chỉnh sửa</Text>
-                  </TouchableOpacity>
-             </View>
-                  <View style={styles.containerCount}>
-          <TouchableOpacity
-            style={[styles.buttonCount, styles.decrement]}
-            onPress={decrement1}>
-            <Text style={styles.textCount}> - </Text>
-          </TouchableOpacity>
-          <Text style={styles.numberCount}>{count1}</Text>
-          <TouchableOpacity
-            style={[styles.buttonCount, styles.increment]}
-            onPress={increment1}>
-            <Text style={styles.textCount}> + </Text>
-          </TouchableOpacity>
-        </View>
-               </View>
-              
-                 
-                </View>
-                <View style={{marginBottom:20}}>
-                <View
-                  style={styles.containCart}>
-                  <Text style={styles.nameCart}>
-                    Phin đen đá
-                  </Text>
-                  <Text style={styles.nameCart}>
-                    35.000
-                  </Text>
-                </View>
-                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-             <View>
-             <Text style={styles.nameSize}>
-                    Size : L
-                  </Text>
-                  <TouchableOpacity>
-                  <Text style={styles.nameButton} > Chỉnh sửa</Text>
-                  </TouchableOpacity>
-             </View>
-                  <View style={styles.containerCount}>
-          <TouchableOpacity
-            style={[styles.buttonCount, styles.decrement]}
-            onPress={decrement2}>
-            <Text style={styles.textCount}> - </Text>
-          </TouchableOpacity>
-          <Text style={styles.numberCount}>{count2}</Text>
-          <TouchableOpacity
-            style={[styles.buttonCount, styles.increment]}
-            onPress={increment2}>
-            <Text style={styles.textCount}> + </Text>
-          </TouchableOpacity>
-        </View>
-               </View>
-                 
-                </View> 
-                <View>
-                <View
-                  style={styles.containCart}>
-                  <Text style={styles.nameCart}>
-                   Bánh xoài
-                  </Text>
-                  <Text style={styles.nameCart}>
-                    35.000
-                  </Text>
-                </View>
-                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-               <View>
-               <Text style={styles.nameSize}>
-                    Size : M
-                  </Text>
-                  <TouchableOpacity>
-                  <Text style={styles.nameButton} > Chỉnh sửa</Text>
-                  </TouchableOpacity>
-               </View>
-                  <View style={styles.containerCount}>
-          <TouchableOpacity
-            style={[styles.buttonCount, styles.decrement]}
-            onPress={decrement3}>
-            <Text style={styles.textCount}> - </Text>
-          </TouchableOpacity>
-          <Text style={styles.numberCount}>{count3}</Text>
-          <TouchableOpacity
-            style={[styles.buttonCount, styles.increment]}
-            onPress={increment3}>
-            <Text style={styles.textCount}> + </Text>
-          </TouchableOpacity>
-        </View>
-               </View>
-                 
-                </View>
-              </ScrollView>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={styles.nameButton}> Thêm món</Text>
+              </TouchableOpacity>
             </View>
+            <Text style={styles.nameCart}>Bàn số : {deskID}</Text>
+            <View>
+            
+              <View style={{borderWidth: 0.2, marginBottom: 10}} />
+              <FlatList
+              keyExtractor={(index)=>index.toString()}
+              showsVerticalScrollIndicator={false}
+                data={listItem}
+                style={{height:550}}
+                renderItem={({item}) => (                  
+                      <>
+                        <RenderItemCart item={item}/>
+
+                      </>                  
+                 
+                )}
+              />
+   
           </View>
         </View>
+        
         <View style={{borderWidth: 0.2, marginBottom: 15}} />
-        <View >
-         <View style={styles.containCart}>
-         <Text style={styles.sumProduct}>Tổng tiền : </Text>
-         <Text style={styles.nameCart}>120.000 đ </Text>
-         </View>
+        <View>
+          <View style={styles.containCart}>
+            <Text style={styles.sumProduct}>Tổng tiền : </Text>
+            <Text style={styles.nameCart}>120.000 đ </Text>
+          </View>
           <Pressable
             style={styles.buttonClick}
             android_ripple={{color: '#EEEE'}}
@@ -234,6 +132,9 @@ export default function CartScreen({navigation}) {
           </Pressable>
         </View>
       </View>
+      {/* <FlatList data={orderData} renderItem={({item}) => (
+        <Text>{item.receiverName}</Text>
+      )}/> */}
     </View>
   );
 }
@@ -246,11 +147,11 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'space-between'
+    justifyContent: 'space-between',
   },
   textTitle: {
     fontSize: 20,
-    color:colors.black
+    color: colors.black,
   },
   images: {
     height: 300,
@@ -282,10 +183,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 20,
   },
-  sumProduct:{ 
-    fontSize:20,
-    fontWeight:'bold',
-    marginBottom:10
+  sumProduct: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   buttonClick: {
     height: 50,
@@ -301,55 +202,53 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: 'bold',
   },
-  containCart:{
+  containCart: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  nameCart:{
+  nameCart: {
     fontSize: 16,
-     color: 'black'
-    },
-   nameButton:{
-      fontSize:15,
-      color:colors.bluesky
-     },
+    color: 'black',
+  },
+  nameButton: {
+    fontSize: 15,
+    color: colors.bluesky,
+  },
   nameSize: {
-      fontSize:15,
-      color:colors.blackgray,
-      marginLeft:10
-     },
+    fontSize: 15,
+    color: colors.blackgray,
+    marginLeft: 10,
+  },
 
-
-     containerCount: {
-      flexDirection: 'row',
-      // marginBottom: 5,
-      justifyContent: 'space-around',
-      alignItems: 'center',
-    },
-    buttonCount: {
-      height: 23,
-      width: 23,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius:15,
-    },
-    increment: {
-      backgroundColor: colors.Orgent,
-    },
-    decrement: {
-      backgroundColor: colors.grey,
-    },
-    textCount: {
-      fontSize: 10,
-      fontWeight: 'bold',
-      color: colors.black,
-    },
-    numberCount: {
-      fontSize: 16,
-      color: colors.black,
-      alignSelf: 'center',
-      padding: 5,
-    },
-
+  containerCount: {
+    flexDirection: 'row',
+    // marginBottom: 5,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  buttonCount: {
+    height: 23,
+    width: 23,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+  },
+  increment: {
+    backgroundColor: colors.Orgent,
+  },
+  decrement: {
+    backgroundColor: colors.grey,
+  },
+  textCount: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: colors.black,
+  },
+  numberCount: {
+    fontSize: 16,
+    color: colors.black,
+    alignSelf: 'center',
+    padding: 5,
+  },
 });

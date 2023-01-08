@@ -1,7 +1,7 @@
 // import colors from '../../constaints/colors';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {images, icons, fontSize} from '../../constaints';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -18,38 +18,8 @@ import {
 import {colors} from '../../constaints/colors';
 
 function FoodItem(props) {
-  let {name, url, price, size} = props.food;
+  let {name, images, price, size} = props.food;
   const {onPress} = props;
-
-  const [dataFood, setDataFood] = useState();
-  useEffect(()=>{
-    getDesk()
-  }, [])
-
-  const getDesk = async () => {
-    axios({
-      // url: 'http://192.168.100.8/get-desk?id=&name=&status=&type=',
-      url: 'http://192.168.100.8/get-product?id=&name=&category=',
-      timeout: 10000,
-      method: 'GET',
-      contentType: ' application/json; charset=utf-8',
-    })
-      .then(result => {
-        setDataFood(result.data)
-        console.log(result);
-        let responseData = result.data;
-        responseData.forEach(item  => {
-          console.log(item);
-          console.log(item.id);
-          console.log(item.name);
-        });
-        // navigation.navigate('HomeMain')
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-  if(!dataFood) return null //check data
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -57,7 +27,7 @@ function FoodItem(props) {
       <Image
         style={styles.imageFood}
         source={{
-          uri: url,
+          uri: 'https://th.bing.com/th/id/R.25f90fbfc2acabd09c16db299baf9e2b?rik=q4nc9%2fXJipN20A&pid=ImgRaw&r=0',
         }}
       />
       <View

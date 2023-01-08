@@ -17,13 +17,14 @@ import ProductDetails from '../screens/Foodlist/ProductDetails';
 import {combineReducers, createStore} from 'redux';
 import {Provider} from 'react-redux';
 import authReducers from '../redux/reducer/authReducers';
-import categoryReducer from '../redux/reducer/categoryReducer';
+import RenderItemCart from '../screens/Cart/RenderItemCart';
+// import categoryReducer from '../redux/reducer/categoryReducer';
 
 const Stack = createNativeStackNavigator();
 
 const rootReducer = combineReducers({
   auths: authReducers, //tham chiếu đến Reducer
-  categorys : categoryReducer
+  // categorys : categoryReducer
 });
 const store = createStore(rootReducer);
 
@@ -32,7 +33,7 @@ export default function AppScreen() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Login"
             component={Login}
             options={{headerShown: false}}
@@ -42,7 +43,7 @@ export default function AppScreen() {
             name="LoadingScreen"
             component={LoadingScreen}
             options={{headerShown: false}}
-          />
+          /> */}
           <Stack.Screen
             name="HomeMain"
             component={HomeMain}
@@ -83,6 +84,11 @@ export default function AppScreen() {
           <Stack.Screen
             name="Register"
             component={Register}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="RenderItemCart"
+            component={RenderItemCart}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

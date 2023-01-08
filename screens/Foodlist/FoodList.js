@@ -17,32 +17,34 @@ import {
 } from 'react-native';
 import {icons} from '../../constaints';
 import {colors} from '../../constaints/colors';
+import { hasLocal } from '../localhost';
 
 import {DataFList} from './DataList';
 import FoodItem from './FoodItems';
 
 
-function FoodList( {navigation}) {
-  const [food, setFood] = useState(DataFList);
+function FoodList( {navigation,route}) {
+  const [food, setFood] = useState([]);
   const [seach, setSeach] = useState('');
   const fillteredFood = () =>
     food.filter(eachfood =>
       eachfood.name.toLowerCase().includes(seach.toLowerCase()),
     );
-    const createButtonAlert = (item) =>
-  Alert.alert(
-    `Bạn muốn thêm món ' ${item.name} '`,
-    "Ấn Ok để đặt thêm món",
-    [
-      {
-        text: "Cancel",
-      
-        style: "cancel"
-      },
-      { text: "OK", 
-      onPress:()=>navigation.navigate('ProductDetails') }
-    ]
-  );
+    const createButtonAlert = (item) => {
+      navigation.navigate('ProductDetails',{
+        item: item,
+        deskID: route?.params.id,
+        price: item.price
+      }) 
+    }
+
+  useEffect(() => {
+      onRequestDataFood()
+  })
+
+ const onRequestDataFood = () => {
+  fetch(`http://${hasLocal}/get-product?id=&name=&category=`).then((result) => result.json()).then((resultData) => setFood(resultData))
+ }
   return (
     <View style={{ backgroundColor: 'white'}}>
        <View
@@ -73,7 +75,11 @@ function FoodList( {navigation}) {
         />
        </View>
          <TouchableOpacity 
-         onPress={()=>navigation.navigate('CartScreen')}>
+         onPress={()=>navigation.navigate('CartScreen',{
+          deskID: route?.params?.id,
+          // status: route?.params?.status
+          // onCallbackItem: onCallBackItem
+         })}>
          <Image
           style={styles.Images}
           source={icons.shoppimg}
@@ -82,6 +88,7 @@ function FoodList( {navigation}) {
         </View>
       <View style={{height: 1, backgroundColor: 'black'}} />
 
+          
       {fillteredFood().length ? (
         <FlatList
           data={fillteredFood()}

@@ -1,264 +1,143 @@
-import React, {useState, useEffect, useContext} from 'react';
 import {
-  Text,
   View,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
+  Text,
   StyleSheet,
-  Dimensions,
   Alert,
-  ActivityIndicator,
+  Dimensions,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  Button,
 } from 'react-native';
-import {fontSize, images} from '../../constaints';
-import {colors} from '../../constaints/colors';
-import { connect } from 'react-redux';
-import {isValidEmail, isValidPassword} from '../../utilies/validations';
-import { register } from '../../redux/actions/authActions';
+import React, {useState, useEffect} from 'react';
+const screenWidth = Dimensions.get('screen').width;
 
- function Register({navigation, register, state}) {
-  //state
-  const [errorEmail, setErrorEmail] = useState('');
-  const [errorPassword, setErrorPassWord] = useState('');
-  const [errorCheckPassword, setCheckErrorPassWord] = useState('');
-  //state email/pass
-  const [email, setEmail] = useState('');
-  const [password, setPassWord] = useState('');
-  const [checkPassword, setCheckPassWord] = useState('');
+import AsyncStorage from '@react-native-async-storage/async-storage';
+export default function Register({navigation, route}) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [rePwd, setRePwd] = useState('');
+  const [errorContent, setErrorContent] = useState('');
 
-  const [keyboardIsShow, setKeyboardIsShow] = useState(false);
-  useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardIsShow(true);
-    });
-    Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardIsShow(false);
-    });
-  });
-  const UserNameHandler = text => {
-    setErrorEmail(isValidEmail(text) == true ? '' : 'Tài khoản không đúng');
-    setEmail(text);
+  const pressBack = () => {
+    navigation.navigate('Login');
   };
-  const PassWordHandler = text => {
-    // cập nhật thay đổi thông tin
-    setErrorPassWord(
-      isValidPassword(text) == true ? '' : 'Mật khẩu phải trên 3 kí tự',
-    );
-    setPassWord(text);
-  };
-  const CheckPassWordHandler = text => {
-    // cập nhật thay đổi thông tin
-    setCheckErrorPassWord(
-      isValidPassword(text) == true ? '' : 'Mật khẩu phải trên 3 kí tự',
-    );
-    setCheckPassWord(text);
-  };
- 
-  const [isLoading,setIsLoading]=useState( false)
-  const NotifineHandler = async () => {
-    
-// const {email,password} = state
-      try {
-        setIsLoading({...state, isLoading: true});
-        await register(username, password); //trờ kq của login
-        setIsLoading({...state, isLoading: false});
-        Alert.alert('Bạn đăng kí thành công ', 'Mời bạn đăng nhập', [
-          {text: 'OK', onPress: () => navigation.navigate('Login')},
+
+  const pressAddNewAccount = () => {
+    if (username.length < 6 && password.length < 6) {
+      setErrorContent('Username and password must be at least 6 characters');
+    } else if (password !== rePwd) {
+      setErrorContent('Re Password does not match');
+    } else {
+      setErrorContent('');
+      const newAccount = {
+        username,
+        password,
+      };
+      AsyncStorage.getItem('account').then(accounts => {
+        const listAccount = JSON.parse(accounts);
+        console.log('' + JSON.stringify(listAccount));
+        if (
+          Array.isArray(listAccount) &&
+          listAccount.some(account => account.username === username)
+        ) {
+          setErrorContent(`${username} already exists`);
+          return;
+        }
+        if (accounts === null) {
+          AsyncStorage.setItem('account', JSON.stringify([newAccount]));
+        } else {
+          listAccount.push(newAccount);
+          AsyncStorage.setItem('account', JSON.stringify(listAccount));
+        }
+        Alert.alert('Success', 'Add new account success', [
+          {
+            text: 'Hoàn thành',
+            onPress: pressBack,
+            // console.log();
+          },
         ]);
-      } catch (error) {
-        setIsLoading({...state, isLoading: false, error: 'Error '});
-      }
-    };
-  
+      });
+    }
+  };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{
-        flex: 100,
-        // flexDirection:'row',
-        backgroundColor: 'white',
-      }}>
-      <View style={styles.ViewBackground}>
-        {/* <Text style={styles.TextBackground}>ĐẶT ĐỒ UỐNG </Text> */}
-        <Image
-          tintColor="blue" //màu icons
-          source={images.computers}
-          style={styles.Image}
+    <View style={styles.container}>
+      <View style={{width: '100%'}}>
+        <TouchableOpacity
+          style={{marginHorizontal: 42.5, marginVertical: 20}}
+          onPress={() => navigation.goBack()}>
+          {/* <Image
+            style={{width: 25, height: 30}}
+            source={require('../assets/images/back.png')}
+          /> */}
+        </TouchableOpacity>
+      </View>
+      <View style={styles.body}>
+        <Text style={styles.textSignIn}>Sign Up</Text>
+        <TextInput
+          placeholder={'Username'}
+          onChangeText={setUsername}
+          style={styles.styleMB20}
         />
-      </View>
-      <View style={{margin: 10}} />
-      <View
-        style={{
-          flex: 25,
-        }}>
-        <View
-          style={{
-            marginHorizontal: 15,
-          }}>
-          <Text style={styles.titleName}>Tài khoản: </Text>
-          <TextInput
-            onChangeText={UserNameHandler}
-            style={styles.userText}
-            placeholder="Nhập tài khoản của bạn"
-            placeholderTextColor={'rgba(0,0,0,0.6)'}
-            // value={'hieu@gmail.com'}
-            value={email}
-          />
-          <View style={styles.ViewEmail} />
-          {<Text style={styles.ErrorText}>{errorEmail}</Text>}
-        </View>
-        <View
-          style={{
-            marginHorizontal: 15,
-          }}>
-          <Text style={styles.titleName}>Mật khẩu: </Text>
-          <TextInput
-            onChangeText={PassWordHandler}
-            style={styles.passwordText}
-            placeholder="Nhập mật khẩu của bạn "
-            placeholderTextColor={'rgba(0,0,0,0.6)'}
-            secureTextEntry={true} //tính bảo mật ****
-            // value={'hhhh'}
-            value={password}
-          />
-          <View style={styles.ViewPassword} />
-          {<Text style={styles.ErrorText}>{errorPassword}</Text>}
-        </View>
-        <View
-          style={{
-            marginHorizontal: 15,
-          }}>
-          <Text style={styles.titleName}>Xác nhận mật khẩu: </Text>
-          <TextInput
-            onChangeText={CheckPassWordHandler}
-            style={styles.passwordText}
-            placeholder="Nhập mật khẩu của bạn "
-            placeholderTextColor={'rgba(0,0,0,0.6)'}
-            secureTextEntry={true} //tính bảo mật ****
-            // value={'hhhh'}
-            value={checkPassword}
-          />
-          <View style={styles.ViewPassword} />
-          {<Text style={styles.ErrorText}>{errorCheckPassword}</Text>}
+        <TextInput
+          secureTextEntry={true}
+          onChangeText={setPassword}
+          placeholder={'Password'}
+          style={styles.styleMB20}
+        />
+        <TextInput
+          secureTextEntry={true}
+          onChangeText={setRePwd}
+          placeholder={'Re-enter Password'}
+          style={styles.styleMB30}
+/>
+        {Boolean(errorContent) && (
+          <Text style={styles.textErr}>{errorContent}</Text>
+        )}
+        <Button title={'Sign In'} onPress={pressAddNewAccount} />
+        <View style={styles.forgotWrapper}>
+          <Text
+            onPress={() => {
+              Alert.alert('Forgot Password');
+            }}
+            style={{textAlign: 'right', color: '#34495E'}}>
+            Forgot Password
+          </Text>
         </View>
       </View>
-
-      {keyboardIsShow == false ? (
-        <View //nếu bàn phím ko hiện thì nút Login hiện
-          style={{
-            flex: 15,
-          }}>
-            {isLoading? <ActivityIndicator size='large' color='blue' /> : <>
-          <TouchableOpacity onPress={NotifineHandler} style={styles.TouchLogin}>
-            <Text style={styles.TextLogin}>Đăng ký</Text>
-          </TouchableOpacity>
-          <View style={styles.ViewDki}>
-            <Text
-              style={styles.TextDki}
-              onPress={() => navigation.goBack('Login')}>
-              Trở lại
-            </Text>
-            <View style={{borderWidth: 0.2, width: 60}} />
-          </View>
-          </>}
-        </View>
-      ) : (
-        <View></View>
-      )}
-    </KeyboardAvoidingView>
+      {/* <Footer /> */}
+    </View>
   );
 }
-const mapStateToProps = (state) => ({})
-
-const mapDispatchToProps =(dispatch)=>( {
-  register: (username, password)=>dispatch(register(username,password))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
-
-const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
-  ViewBackground: {
-    flex: 13,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    backgroundColor: colors.Orgent,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-  },
-  TextBackground: {
-    fontSize: 30,
-    color: 'blue',
-  },
-  Image: {
-    height: 150,
-    width: 150,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-  },
-  TouchLogin: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.bluesky,
-    alignSelf: 'center',
-    width: '60%',
-    height: 45,
-    borderRadius: 20, // bo bán kính
-  },
-  TextLogin: {
-    padding: 7,
-    fontSize: fontSize.h2,
-    color: colors.white,
-  },
-  TextDown: {
-    padding: 8,
-    fontSize: fontSize.h5,
-    color: 'black',
-    alignSelf: 'center',
-    marginHorizontal: 5,
-  },
-  ViewPassword: {
-    height: 1,
-    backgroundColor: 'black',
-    width: '100%',
-    marginHorizontal: 15,
-    alignSelf: 'center',
-  },
-  ViewEmail: {
-    //tạo dòng gạch chân
-    height: 1,
-    backgroundColor: 'black',
-    width: '100%',
-    marginHorizontal: 15,
-    alignSelf: 'center',
-  },
-  ErrorText: {
+  textErr: {
     color: 'red',
-    marginBottom: 15,
+    marginBottom: 30,
   },
-  userText: {
-    color: 'black',
-  },
-  passwordText: {
-    color: 'black',
-  },
-  titleName: {
-    color: 'blue',
-    fontSize: fontSize.h4,
-    fontWeight: 'bold',
-  },
-  ViewDki: {
-    justifyContent: 'center',
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    margin: 20,
   },
-  TextDki: {
-    fontSize: 18,
+  styleMB30: {
+    marginBottom: 30,
+  },
+  styleMB20: {
+    marginBottom: 20,
+  },
+  body: {
+    width: screenWidth - 60,
+  },
+  textSignIn: {
+    fontWeight: '700',
+    fontSize: 24,
+    marginBottom: 30,
     color: 'black',
+  },
+  forgotWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 20,
   },
 });

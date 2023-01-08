@@ -6,14 +6,24 @@ import {
   ScrollView,
   Image,
   Alert,
+  FlatList
 } from 'react-native';
 import React from 'react';
 import {colors} from '../../constaints/colors';
 import {images} from '../../constaints';
 import {ButtonBack} from '../../Button';
+import { hasLocal } from '../localhost';
 
 export default function History({navigation}) {
-
+  const [history, setHistory] = React.useState([])
+  React.useEffect(() => {
+onRequestDataFood()
+   
+  }, [])
+  
+  const onRequestDataFood = () => {
+    fetch(`http://${hasLocal}/history`).then((result) => result.json()).then((resultData) => setHistory(resultData))
+   }
   return (
     <View style={{}}>
       <View style={styles.containerView}>
@@ -26,7 +36,7 @@ export default function History({navigation}) {
         <View style={{width:80}}/>
       </View>
 
-      <ScrollView>
+      {/* <ScrollView>
         <View style={styles.orderRow}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: colors.black}}>Bàn số: </Text>
@@ -116,7 +126,13 @@ export default function History({navigation}) {
           </View>
           
         </View>
-      </ScrollView>
+      </ScrollView> */}
+      <FlatList data={history} 
+      renderItem={({item}) => {
+        return(
+          <Text style={{color:'#000'}}>{item.nameProduct}</Text>
+        )
+      }}/>
     </View>
   );
 }

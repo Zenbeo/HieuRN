@@ -9,6 +9,7 @@ import HomeMain from './Home/HomeMain';
 import Table from './Table/Table';
 import Register from './Register/Register';
 import LoadingScreen from './Home/LoadingScreen';
+import RenderItemCart from './Cart/RenderItemCart';
 export {
   MainScreen,
   Login,
@@ -20,5 +21,6 @@ export {
   HomeMain,
   Table,
   Register,
-  LoadingScreen
+  LoadingScreen,
+  RenderItemCart
 };
