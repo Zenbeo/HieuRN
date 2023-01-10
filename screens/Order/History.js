@@ -24,115 +24,40 @@ onRequestDataFood()
   const onRequestDataFood = () => {
     fetch(`http://${hasLocal}/history`).then((result) => result.json()).then((resultData) => setHistory(resultData))
    }
+
   return (
-    <View style={{}}>
+    <View style={{flex:1}}>
       <View style={styles.containerView}>
         <View style={{width:90,justifyContent:'center'}}>
     <ButtonBack onPress={()=>navigation.goBack()}/>
-        </View >
+        </View >  
         <View style={styles.titlesView}>
     <Text style={styles.TextTitles}> Lịch sử</Text>
         </View>
         <View style={{width:80}}/>
       </View>
-
-      {/* <ScrollView>
-        <View style={styles.orderRow}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Bàn số: </Text>
-            <Text style={{color: colors.black}}>3</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Thời gian: </Text>
-            <Text style={{color: colors.black}}>15:00:33</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Tổng tiền:</Text>
-            <Text style={{color: colors.black}}>560.000</Text>
-          </View>
-        </View>
-
-        <View style={styles.orderRow}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Bàn số: </Text>
-            <Text style={{color: colors.black}}>4</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Thời gian: </Text>
-            <Text style={{color: colors.black}}>16:06:03</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Tổng tiền:</Text>
-            <Text style={{color: colors.black}}>340.000</Text>
-          </View>
-        </View>
-        <View style={styles.orderRow}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Bàn số: </Text>
-            <Text style={{color: colors.black}}>6</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Thời gian: </Text>
-            <Text style={{color: colors.black}}>16:30:13</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Tổng tiền:</Text>
-            <Text style={{color: colors.black}}>660.000</Text>
-          </View>
-          
-        </View>
-        <View style={styles.orderRow}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Bàn số: </Text>
-            <Text style={{color: colors.black}}>9</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Thời gian: </Text>
-            <Text style={{color: colors.black}}>17:39:13</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Tổng tiền:</Text>
-            <Text style={{color: colors.black}}>660.000</Text>
-          </View>
-          
-        </View>
-        <View style={styles.orderRow}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Bàn số: </Text>
-            <Text style={{color: colors.black}}>13</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Thời gian: </Text>
-            <Text style={{color: colors.black}}>17:33:13</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Tổng tiền:</Text>
-            <Text style={{color: colors.black}}>260.000</Text>
-          </View>
-          
-        </View>
-        <View style={styles.orderRow}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Bàn số: </Text>
-            <Text style={{color: colors.black}}>12</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Thời gian: </Text>
-            <Text style={{color: colors.black}}>17:30:13</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: colors.black}}>Tổng tiền:</Text>
-            <Text style={{color: colors.black}}>360.000</Text>
-          </View>
-          
-        </View>
-      </ScrollView> */}
+      
       <FlatList data={history} 
       renderItem={({item}) => {
         return(
-          <Text style={{color:'#000'}}>{item.nameProduct}</Text>
+          <View style={styles.orderRow}>
+           <View style={styles.onListProduct}>
+           <Text style={{color:'#000'}}> Bàn số: </Text>
+           <Text style={{color:'#000',fontSize:16}}>  {item.deskId}</Text>
+           </View>
+           <View style={styles.onListProduct}>
+            <Text style={{color:'#000'}}>Tổng tiền: </Text>
+            <Text style={{color:'#000',fontSize:16}}> {item.price}</Text>
+            </View>
+            <View style={styles.onListProduct}>
+            <Text style={{color:'#000'}}>Số lượng: </Text>
+            <Text style={{color:'#000',fontSize:16}}>{item.countProduct}</Text>
+            </View>
+            
+          </View>
         )
       }}/>
+      {/* <View style={{ height:10,backgroundColor:'red'}}/> */}
     </View>
   );
 }
@@ -182,4 +107,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
+  onListProduct:{
+    flexDirection:'row', 
+    justifyContent:'space-between',
+     paddingRight:10}
 });

@@ -21,8 +21,7 @@ export default function HomeMain({navigation}) {
           style={styles.Image}
         />
       </View>
-      <View style={{height: height / 5}} />
-
+      <View style={{height: height / 8}} />
       <View style={styles.ViewButton}>
         <TouchableOpacity
           onPress={() => navigation.navigate('History')}
@@ -44,7 +43,7 @@ export default function HomeMain({navigation}) {
         <TouchableOpacity
           style={styles.ButtonBack}
           onPress={() => navigation.navigate('Login',{
-            // isNull: true
+            // isNull: truer
           })}>
           <Text style={styles.TextButton}>Đăng xuất</Text>
         </TouchableOpacity>
@@ -55,7 +54,7 @@ export default function HomeMain({navigation}) {
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   ViewBackground: {
-    height: 230,
+    height: 250,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',

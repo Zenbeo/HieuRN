@@ -11,8 +11,10 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 const screenWidth = Dimensions.get('screen').width;
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {fontSize, images} from '../../constaints';
+import {colors} from '../../constaints/colors';
+
 export default function Register({navigation, route}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -25,9 +27,9 @@ export default function Register({navigation, route}) {
 
   const pressAddNewAccount = () => {
     if (username.length < 6 && password.length < 6) {
-      setErrorContent('Username and password must be at least 6 characters');
+      setErrorContent('Tài khoản hoặc mật khẩu phải lớn hơn 6 kí tự');
     } else if (password !== rePwd) {
-      setErrorContent('Re Password does not match');
+      setErrorContent('Mật khẩu không đúng');
     } else {
       setErrorContent('');
       const newAccount = {
@@ -50,7 +52,7 @@ export default function Register({navigation, route}) {
           listAccount.push(newAccount);
           AsyncStorage.setItem('account', JSON.stringify(listAccount));
         }
-        Alert.alert('Success', 'Add new account success', [
+        Alert.alert('Đăng ký thành công', 'Mời bạn đăng nhập', [
           {
             text: 'Hoàn thành',
             onPress: pressBack,
@@ -62,50 +64,57 @@ export default function Register({navigation, route}) {
   };
   return (
     <View style={styles.container}>
-      <View style={{width: '100%'}}>
-        <TouchableOpacity
-          style={{marginHorizontal: 42.5, marginVertical: 20}}
-          onPress={() => navigation.goBack()}>
-          {/* <Image
-            style={{width: 25, height: 30}}
-            source={require('../assets/images/back.png')}
-          /> */}
-        </TouchableOpacity>
+      <View style={styles.ViewBackground}>
+        <View style={{flexDirection: 'column'}}>
+          <Text style={styles.TextTitle}>Hello </Text>
+          <Text style={styles.TextTitle}>Coffee Family </Text>
+        </View>
+        <Image
+          tintColor="blue" //màu icons
+          source={images.computers}
+          style={styles.Image}
+        />
       </View>
+      <View style={{margin: 20}} />
+
       <View style={styles.body}>
-        <Text style={styles.textSignIn}>Sign Up</Text>
+        {/* <Text style={styles.textSignIn}>Đăng ký</Text> */}
+        <Text style={styles.titleName}>Tài khoản</Text>
         <TextInput
-          placeholder={'Username'}
+          placeholder={'Tài khoản'}
           onChangeText={setUsername}
           style={styles.styleMB20}
         />
+        <View style={{borderWidth: 0.2, marginBottom: 10}} />
+        <Text style={styles.titleName}>Mật khẩu</Text>
         <TextInput
           secureTextEntry={true}
           onChangeText={setPassword}
-          placeholder={'Password'}
+          placeholder={'Mật khẩu'}
           style={styles.styleMB20}
         />
+        <View style={{borderWidth: 0.2, marginBottom: 10}} />
+        <Text style={styles.titleName}>Xác định mật khẩu</Text>
         <TextInput
           secureTextEntry={true}
           onChangeText={setRePwd}
-          placeholder={'Re-enter Password'}
+          placeholder={'Xác định mật khẩu'}
           style={styles.styleMB30}
-/>
+        />
+        <View style={{borderWidth: 0.2, marginBottom: 10}} />
         {Boolean(errorContent) && (
           <Text style={styles.textErr}>{errorContent}</Text>
         )}
-        <Button title={'Sign In'} onPress={pressAddNewAccount} />
-        <View style={styles.forgotWrapper}>
-          <Text
-            onPress={() => {
-              Alert.alert('Forgot Password');
-            }}
-            style={{textAlign: 'right', color: '#34495E'}}>
-            Forgot Password
-          </Text>
-        </View>
+        <TouchableOpacity
+          style={styles.buttonRegister}
+          onPress={pressAddNewAccount}>
+          <Text style={styles.textRegister}>Đăng ký</Text>
+        </TouchableOpacity>
+        <Text style={styles.TextDki} onPress={() => navigation.goBack()}>
+          Trở lại
+        </Text>
       </View>
-      {/* <Footer /> */}
+      <View style={{height:200}}/>
     </View>
   );
 }
@@ -115,29 +124,83 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    backgroundColor: colors.white,
+  },
+  ViewBackground: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: colors.Orgent,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    height: 250,
+  },
+  TextTitle: {
+    fontSize: 30,
+    color: 'blue',
+    paddingLeft: 15,
+    fontWeight: '700',
+  },
+  Image: {
+    height: 150,
+    width: 150,
+    fontWeight: 'bold',
+    // backgroundColor: 'blue',
+    alignSelf: 'center',
+    marginRight: 15,
+  },
+  titleName: {
+    color: 'blue',
+    fontSize: fontSize.h4,
+    fontWeight: '600',
   },
   styleMB30: {
-    marginBottom: 30,
+    // marginBottom: 30,
+    paddingLeft: 10,
+    marginBottom: -10,
   },
   styleMB20: {
-    marginBottom: 20,
+    // marginBottom: 20,
+    paddingLeft: 10,
+    marginBottom: -10,
   },
   body: {
-    width: screenWidth - 60,
+    marginLeft: 10,
+    marginTop: -5,
   },
   textSignIn: {
     fontWeight: '700',
     fontSize: 24,
-    marginBottom: 30,
+    marginBottom: 10,
     color: 'black',
+    alignSelf: 'center',
   },
   forgotWrapper: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginTop: 20,
+  },
+  buttonRegister: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 45,
+    width: '80%',
+    backgroundColor: colors.bluesky,
+    justifyContent: 'center',
+    borderRadius: 10,
+    marginLeft: 30,
+    marginTop: 20,
+  },
+  textRegister: {
+    fontSize: 15,
+    color: colors.white,
+  },
+  TextDki: {
+    alignSelf: 'center',
+    fontSize: 15,
+    color: colors.silver,
+    paddingLeft: -40,
+    paddingTop: 10,
+    borderBottomWidth: 1,
   },
 });

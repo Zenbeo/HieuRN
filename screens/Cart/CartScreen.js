@@ -30,8 +30,6 @@ export default function CartScreen({navigation, route}) {
     })
   }
 
-
-
   const deskID = route?.params?.deskID;
   const [listItem, setListItem] = React.useState([]);
 const [newData, setNewData] = useState([])
@@ -58,7 +56,6 @@ const [loading, setLoading] = useState(false);
 
   return (
     <View
-      // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{
         flex: 1,
         backgroundColor: colors.Orgent,
@@ -158,7 +155,6 @@ const styles = StyleSheet.create({
     width: 300,
     resizeMode: 'cover',
     borderRadius: 10,
-    // marginRight: 15,
     alignSelf: 'center',
   },
   closebutton: {

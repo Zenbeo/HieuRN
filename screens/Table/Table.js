@@ -43,11 +43,11 @@ function Table({navigation,route}) {
   }, [])
   const getDesk = async () => {
     axios({
-      url: `http://${hasLocal}/get-desk?id=&name=&status=&type=`,
-      // url: 'http://192.168.100.8/get-product?id=&name=&category=',
+      url: `http://${hasLocal}/get-desk?id=&name=&status=&type=&page=`,
       timeout: 10000,
       method: 'GET',
       contentType: ' application/json; charset=utf-8',
+     
     })
       .then(result => {
         setData(result.data)
@@ -82,7 +82,7 @@ function Table({navigation,route}) {
 
         <View style={{width: 60}} />
       </View>
-      {/* {fillteredTable().length ? ( */}
+      
       <FlatList
         data={data}
         keyExtractor={index => index.toString()}
@@ -101,7 +101,7 @@ function Table({navigation,route}) {
           </Pressable>
         )}
       />
-      <View style={{flex:10}}/>
+      
     </View>
   );
 }
@@ -140,6 +140,8 @@ const styles = StyleSheet.create({
     paddingStart: 10,
   },
   container: {
+    height:160,
+    width:160,
     margin: 18,
     marginRight: 25,
     paddingTop:10,
@@ -157,23 +159,25 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOpacity: 0.5,
     shadowOffset: {width: 0, height: 2},
+  marginBottom:5
   },
 
   nameTable: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     color: colors.warning,
+    marginBottom:5
   },
   imageTable: {
-    height: 130,
-    width: 130,
+    height: 90,
+    width: 90,
   },
   buttonPressed: {
     opacity: 0.3,
   },
   Text:{
     color: colors.bluesky,
-    fontSize: 20,
+    fontSize: 22,
   },
   searchErrorView:{
     height:'100%',

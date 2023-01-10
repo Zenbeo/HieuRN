@@ -15,9 +15,9 @@ import {colors} from '../../constaints/colors';
 import {icons} from '../../constaints';
 import axios from 'axios';
 import FormData from 'form-data';
-import { hasLocal } from '../localhost';
+import {hasLocal} from '../localhost';
 
-export default function ProductDetails({navigation, props, route}) {
+export default function ProductDetails({navigation, props, route, images}) {
   const [count, setCount] = useState(0);
   const [check, setCheck] = useState(true);
   function increment() {
@@ -36,35 +36,36 @@ export default function ProductDetails({navigation, props, route}) {
     });
   }
   const [keyboardIsShow, setKeyboardIsShow] = useState(false);
-  const idProduct = route?.params?.item?.id
-  const priceProduct =  route?.params?.item?.price
+  const idProduct = route?.params?.item?.id;
+  const priceProduct = route?.params?.item?.price;
   useEffect(() => {
-    console.log("LOG CHECK " + priceProduct);
+    console.log('LOG CHECK ' + priceProduct);
     Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardIsShow(true);
     });
     Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardIsShow(false);
     });
-  },[check]);
+  }, [check]);
 
   const [dataProduct, setDataProduct] = useState([]);
 
-  const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState(0);
 
   const onSubmitFormHandler = async () => {
-    axios.post(`http://${hasLocal}/create-orders`, {
-      deskId: route?.params?.deskID,
-      productId: idProduct,
-      size: check ? 'M' : 'L',
-      productPrice: priceProduct.toString() ,
-      quantity: quantity
-  })
+    axios
+      .post(`http://${hasLocal}/create-orders`, {
+        deskId: route?.params?.deskID,
+        productId: idProduct,
+        size: check ? 'M' : 'L',
+        productPrice: priceProduct.toString(),
+        quantity: quantity,
+      })
       .then(function (response) {
-          console.log(response);
+        console.log(response);
       })
       .catch(function (error) {
-          console.log(error);
+        console.log(error);
       });
   };
 
@@ -80,12 +81,14 @@ export default function ProductDetails({navigation, props, route}) {
           <Image source={icons.close} style={styles.closebutton} />
         </TouchableOpacity>
 
-        <Image
-          style={styles.images}
-          source={{
-            uri: 'https://www.highlandscoffee.com.vn/vnt_upload/product/05_2018/CFD.png',
-          }}
-        />
+        {images.filter((index, item) => {
+          <Image
+            style={styles.images}
+            source={{
+              uri: `http://${hasLocal}` + item,
+            }}
+          />;
+        })}
       </View>
       <View style={styles.titleProduct}>
         <View style={styles.titleNameCost}>
@@ -106,7 +109,7 @@ export default function ProductDetails({navigation, props, route}) {
             style={[
               styles.buttonSize,
               {backgroundColor: check ? colors.Orgent : colors.grey},
-            ]}>              
+            ]}>
             <Text style={styles.textSize}>M</Text>
           </TouchableOpacity>
           <TouchableOpacity

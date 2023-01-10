@@ -1,7 +1,7 @@
 // import colors from '../../constaints/colors';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {images, icons, fontSize} from '../../constaints';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -16,20 +16,37 @@ import {
   StyleSheet,
 } from 'react-native';
 import {colors} from '../../constaints/colors';
+import { hasLocal } from '../localhost';
 
 function FoodItem(props) {
-  let {name, images, price, size} = props.food;
+  let {name, images, price, size,route} = props.food;
   const {onPress} = props;
+  // useEffect(()=>{
+  //   console.log(images.item);
+  // },[])
+ 
   return (
     <TouchableOpacity
       onPress={onPress}
       style={styles.buttonFood}>
-      <Image
+   { images.map((item)=><Image
         style={styles.imageFood}
         source={{
-          uri: 'https://th.bing.com/th/id/R.25f90fbfc2acabd09c16db299baf9e2b?rik=q4nc9%2fXJipN20A&pid=ImgRaw&r=0',
+          uri: `http://${hasLocal}`+item,
         }}
-      />
+        // source={{ uri: `${images}` }} 
+      />)}   
+          {/* { images.map((item) => {
+        <Image
+          style={styles.imageFood}
+          source={{
+            // show ảnh chỗ này ạ
+            uri: 'http://192.168.42.114' + item
+          }}
+        />
+        // console.log(route?.params?.images?.item);
+        // console.log(images.item);
+        })} */}
       <View
         style={styles.viewText}>
         <Text
@@ -47,7 +64,7 @@ function FoodItem(props) {
 
         <Text
           style={styles.size}>
-          Size : {size}
+          Size : M, L {size}
         </Text>
       </View>
     </TouchableOpacity>

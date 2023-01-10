@@ -26,7 +26,7 @@ export default function RenderItemCart({navigation, item}) {
         <Text style={styles.nameCart}>{item.productName}</Text>
         {/* <Text style={styles.nameCart}>  x{item.quantity}</Text> */}
         
-        <Text style={styles.nameCart}> gia: {item.totalPrice}</Text>
+        <Text style={{fontSize: 17,color: 'black',alignSelf:'flex-end'}}> gia: {item.totalPrice}</Text>
       </View>
       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
              <View>
@@ -119,14 +119,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   containCart: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection:'row', 
+    justifyContent:'space-between',
     alignItems: 'center',
     width:200
   },
   nameCart: {
     fontSize: 17,
     color: 'black',
+    
   },
   nameButton: {
     fontSize: 15,
