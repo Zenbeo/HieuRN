@@ -34,19 +34,8 @@ function FoodItem(props) {
         source={{
           uri: `http://${hasLocal}`+item,
         }}
-        // source={{ uri: `${images}` }} 
       />)}   
-          {/* { images.map((item) => {
-        <Image
-          style={styles.imageFood}
-          source={{
-            // show ảnh chỗ này ạ
-            uri: 'http://192.168.42.114' + item
-          }}
-        />
-        // console.log(route?.params?.images?.item);
-        // console.log(images.item);
-        })} */}
+        
       <View
         style={styles.viewText}>
         <Text

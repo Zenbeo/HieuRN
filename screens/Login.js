@@ -10,7 +10,7 @@ import {
   TextInput,
   Button,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 const screenWidth = Dimensions.get('screen').width;
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {colors} from '../constaints/colors';
@@ -31,9 +31,12 @@ export default function Login({navigation, listAccount, route}) {
     setIsErrorWrongUsernameOrPass(false);
   }, [username, password]);
 
-  useEffect(() => {
-    // Alert.alert('Welcome back');
-  }, []);
+ const inputRef = useRef()
+
+ React.useEffect(()=>{
+  inputRef.current.focus();
+}, []);
+
 const onLogins= () => {
   AsyncStorage.getItem('account').then(accounts => {
     const listAccount = JSON.parse(accounts);
@@ -75,6 +78,7 @@ const onLogins= () => {
         <View style={styles.containerInput}>
         <Text style={styles.titleName}>Tài khoản</Text>
           <TextInput
+          ref={inputRef}
             placeholder={'Tài khoản'}
             value={username}
             onChangeText={text => setUsername(text)}

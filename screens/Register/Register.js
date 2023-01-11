@@ -9,7 +9,7 @@ import {
   TextInput,
   Button,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 const screenWidth = Dimensions.get('screen').width;
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {fontSize, images} from '../../constaints';
@@ -20,6 +20,11 @@ export default function Register({navigation, route}) {
   const [password, setPassword] = useState('');
   const [rePwd, setRePwd] = useState('');
   const [errorContent, setErrorContent] = useState('');
+
+const inputRef = useRef() 
+React.useEffect(()=>{
+  inputRef.current.focus();
+}, []);
 
   const pressBack = () => {
     navigation.navigate('Login');
@@ -81,6 +86,7 @@ export default function Register({navigation, route}) {
         {/* <Text style={styles.textSignIn}>Đăng ký</Text> */}
         <Text style={styles.titleName}>Tài khoản</Text>
         <TextInput
+        ref={inputRef}
           placeholder={'Tài khoản'}
           onChangeText={setUsername}
           style={styles.styleMB20}

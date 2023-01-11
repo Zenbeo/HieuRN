@@ -34,7 +34,8 @@ function FoodList( {navigation,route}) {
       navigation.navigate('ProductDetails',{
         item: item,
         deskID: route?.params.id,
-        price: item.price
+        price: item.price,
+        images: item.images
       }) 
     }
 
@@ -43,7 +44,7 @@ function FoodList( {navigation,route}) {
   })
 
  const onRequestDataFood = () => {
-  fetch(`http://${hasLocal}/get-product?id=&name=&category=`).then((result) => result.json()).then((resultData) => setFood(resultData))
+  fetch(`http://${hasLocal}/get-product?id=&name=&category=&_limit=100&_page=1`).then((result) => result.json()).then((resultData) => setFood(resultData))
  }
   return (
     <View style={{ backgroundColor: 'white'}}>

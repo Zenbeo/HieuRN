@@ -24,18 +24,15 @@ export default function RenderItemCart({navigation, item}) {
       <View style={styles.containCart}>
         
         <Text style={styles.nameCart}>{item.productName}</Text>
-        {/* <Text style={styles.nameCart}>  x{item.quantity}</Text> */}
         
-        <Text style={{fontSize: 17,color: 'black',alignSelf:'flex-end'}}> gia: {item.totalPrice}</Text>
+        <Text style={{fontSize: 17,color: 'black',alignSelf:'flex-end'}}> gia:{item.totalPrice}</Text>
       </View>
       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
              <View>
              <Text style={styles.nameSize}>
                     Size : {item.size}
                   </Text>
-                  {/* <TouchableOpacity onPress={()=>navigation.navigate('ProductDetails')}>
-                  <Text style={styles.nameButton} > Chỉnh sửa</Text>
-                  </TouchableOpacity> */}
+                 
              </View>
                   <View style={styles.containerCount}>
           <TouchableOpacity

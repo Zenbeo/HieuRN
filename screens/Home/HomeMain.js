@@ -7,11 +7,17 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
-import React from 'react';
+import React, { forwardRef, useImperativeHandle,useRef } from 'react';
 import {fontSize, images} from '../../constaints';
 import {colors} from '../../constaints/colors';
 
-export default function HomeMain({navigation}) {
+ function HomeMain({navigation}) {
+  const inputRef = useRef()
+  // useImperativeHandle(ref, ()=>{
+  //   clean : {
+  //    ()=> inputRef.current.clean()
+  //   }
+  // })
   return (
     <View style={{flex: 1}}>
       <View style={styles.ViewBackground}>
@@ -44,6 +50,7 @@ export default function HomeMain({navigation}) {
           style={styles.ButtonBack}
           onPress={() => navigation.navigate('Login',{
             // isNull: truer
+            
           })}>
           <Text style={styles.TextButton}>Đăng xuất</Text>
         </TouchableOpacity>
@@ -51,6 +58,7 @@ export default function HomeMain({navigation}) {
     </View>
   );
 }
+export default forwardRef( HomeMain)
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   ViewBackground: {

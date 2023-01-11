@@ -57,7 +57,7 @@ onRequestDataFood()
           </View>
         )
       }}/>
-      {/* <View style={{ height:10,backgroundColor:'red'}}/> */}
+      
     </View>
   );
 }

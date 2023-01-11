@@ -25,11 +25,22 @@ export default function CartScreen({navigation, route}) {
   const [status, setStatus] = useState(route?.params?.status)
   const createButtonAlert = () =>{
     setStatus(!status)
-    navigation.navigate('Table',{
-      hasDesk: status
-    })
+    Alert.alert(
+      "Đặt hàng thành công",
+      "",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () =>  navigation.navigate('Table',{
+          hasDesk: status
+        }) }
+      ]
+    );
+   
   }
-
   const deskID = route?.params?.deskID;
   const [listItem, setListItem] = React.useState([]);
 const [newData, setNewData] = useState([])
@@ -119,7 +130,7 @@ const [loading, setLoading] = useState(false);
         <View>
           <View style={styles.containCart}>
             <Text style={styles.sumProduct}>Tổng tiền : </Text>
-            <Text style={styles.nameCart}>120.000 đ </Text>
+            <Text style={styles.nameCart}>0 đ </Text>
           </View>
           <Pressable
             style={styles.buttonClick}

@@ -43,7 +43,7 @@ function Table({navigation,route}) {
   }, [])
   const getDesk = async () => {
     axios({
-      url: `http://${hasLocal}/get-desk?id=&name=&status=&type=&page=`,
+      url: `http://${hasLocal}/get-desk?id=&name=&status=&type=&_limit=100&_page=1`,
       timeout: 10000,
       method: 'GET',
       contentType: ' application/json; charset=utf-8',

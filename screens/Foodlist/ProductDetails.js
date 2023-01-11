@@ -9,6 +9,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Alert,
+  FlatList,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {colors} from '../../constaints/colors';
@@ -17,7 +18,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 import {hasLocal} from '../localhost';
 
-export default function ProductDetails({navigation, props, route, images}) {
+export default function ProductDetails({navigation, props, route, item}) {
   const [count, setCount] = useState(0);
   const [check, setCheck] = useState(true);
   function increment() {
@@ -38,8 +39,10 @@ export default function ProductDetails({navigation, props, route, images}) {
   const [keyboardIsShow, setKeyboardIsShow] = useState(false);
   const idProduct = route?.params?.item?.id;
   const priceProduct = route?.params?.item?.price;
+  const images = route?.params?.images
   useEffect(() => {
     console.log('LOG CHECK ' + priceProduct);
+    console.log( 'Anh' + images);
     Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardIsShow(true);
     });
@@ -47,8 +50,6 @@ export default function ProductDetails({navigation, props, route, images}) {
       setKeyboardIsShow(false);
     });
   }, [check]);
-
-  const [dataProduct, setDataProduct] = useState([]);
 
   const [quantity, setQuantity] = useState(0);
 
@@ -60,9 +61,22 @@ export default function ProductDetails({navigation, props, route, images}) {
         size: check ? 'M' : 'L',
         productPrice: priceProduct.toString(),
         quantity: quantity,
+        // images: route?.params?.images
       })
       .then(function (response) {
         console.log(response);
+        Alert.alert(
+          "Thêm sản phẩm thành công",
+          "",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => navigation.navigate('FoodList') }
+          ]
+        );
       })
       .catch(function (error) {
         console.log(error);
@@ -77,18 +91,15 @@ export default function ProductDetails({navigation, props, route, images}) {
         backgroundColor: colors.Orgent,
       }}>
       <View style={styles.title}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        {/* <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={icons.close} style={styles.closebutton} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        {images.filter((index, item) => {
-          <Image
-            style={styles.images}
-            source={{
-              uri: `http://${hasLocal}` + item,
-            }}
-          />;
-        })}
+        <Image
+          style={styles.images}
+          source={{ uri: `http://${hasLocal}`+images,}}
+          />
+    
       </View>
       <View style={styles.titleProduct}>
         <View style={styles.titleNameCost}>
@@ -171,9 +182,9 @@ const styles = StyleSheet.create({
   },
   images: {
     height: 400,
-    width: 400,
+    width: 420,
     resizeMode: 'cover',
-    marginLeft: -40,
+    marginRight:10
   },
   closebutton: {
     height: 30,
@@ -183,8 +194,8 @@ const styles = StyleSheet.create({
   titleProduct: {
     backgroundColor: colors.white,
     flex: 1,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
     padding: 15,
   },
   containerSize: {

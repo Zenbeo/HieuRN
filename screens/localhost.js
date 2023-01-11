@@ -1,1 +1,1 @@
-export const hasLocal = '192.168.42.114'
+export const hasLocal = '192.168.100.8'
